@@ -28,9 +28,9 @@ angular.module('starter.controllers', [])
 .controller('SearchMovies', function($scope, $http) {
 
         $scope.searchOpts = [
-            {opt: 'Title'},
-            {opt: 'ID'},
-            {opt: 'Actors'}
+            {opt: 'title', optName: 'Movie Title'},
+            {opt: 'idIMDB', optName: 'Movie ID'},
+            {opt: 'name', optName: 'Actor Name'}
         ];
 
         $scope.selectedOpt = $scope.searchOpts[0];

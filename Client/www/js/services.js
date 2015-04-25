@@ -8,7 +8,7 @@ angular.module('starter.services', [])
 
         $http.get(ApiEndpoint.url)
             .success(function(data) {
-                console.log('Got some data: ', data)
+                console.log('Got some data from: ' + ApiEndpoint.url + '\nConnection is ok!')
                 q.resolve(data);
             })
             .error(function(error){
