@@ -1,12 +1,12 @@
 angular.module('starter.controllers', [])
 
-    .controller('DashCtrl', function($scope, Api) {
-        $scope.data = null;
-        Api.getApiData()
-            .then(function(result) {
-                $scope.data = result.data;
-            })
-    })
+.controller('DashCtrl', function($scope, Api) {
+    $scope.data = null;
+    Api.getApiData()
+        .then(function(result) {
+            $scope.data = result.data;
+        })
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   $scope.chats = Chats.all();
@@ -25,7 +25,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('SearchMovies', function($scope, $http) {
+.controller('SearchMovies', function($scope, $http, Movie) {
 
         $scope.searchOpts = [
             {opt: 'title', optName: 'Movie Title'},
@@ -34,6 +34,8 @@ angular.module('starter.controllers', [])
         ];
 
         $scope.selectedOpt = $scope.searchOpts[0];
+        $scope.movieXML = Movie.getMovie();
+        $scope.comments = "";
 
         $scope.searchMovieBy = function(movie, selectedOpt){
             console.log('Searching ' + movie.searchText + ' and ' + selectedOpt.opt);
@@ -53,6 +55,18 @@ angular.module('starter.controllers', [])
                     // this callback will be called asynchronously
                     // when the response is available
                     console.log(data);
+                    if(window.DOMParser){
+                        parser = new DOMParser()
+                        xmlDoc=parser.parseFromString(data,"text/xml");
+                    }
+
+                        $scope.movieXML.name = xmlDoc.getElementsByTagName("title")[0].childNodes[0].nodeValue;
+                        $scope.movieXML.poster = xmlDoc.getElementsByTagName("urlPoster")[0].childNodes[0].nodeValue;
+                        $scope.movieXML.rating = xmlDoc.getElementsByTagName("rating")[0].childNodes[0].nodeValue;
+                        $scope.movieXML.plot = xmlDoc.getElementsByTagName("plot")[0].childNodes[0].nodeValue;
+                        $scope.comments = Movie.getComments();
+                    console.log($scope.comments);
+
                 }).
                 error(function(data, status, headers, config) {
                     // called asynchronously if an error occurs

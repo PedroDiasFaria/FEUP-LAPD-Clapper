@@ -12,7 +12,7 @@ angular.module('starter.services', [])
                 q.resolve(data);
             })
             .error(function(error){
-                console.log('Had an error')
+                console.log('Connection error')
                 q.reject(error);
             })
 
@@ -71,4 +71,31 @@ angular.module('starter.services', [])
       return null;
     }
   };
-});
+})
+
+.factory('Movie', function(){
+
+        var comments = [
+            {id: 'Rafa', content: 'Top'},
+            {id: 'Pedro', content: 'Meh'},
+            {id: 'Miguel', content: 'Fail'}
+        ];
+
+        var movie = {
+            name : "none",
+            rating : 0,
+            poster : "../img/clapperlogo.png",
+            year: "",
+            plot: ""
+        };
+
+        return{
+          getMovie: function(){
+              return movie;
+          },
+
+        getComments: function(){
+            return comments;
+        }
+        };
+    });

@@ -24,14 +24,31 @@
         <div class="list card">
 
             <div class="item item-avatar">
-                <img src="/img/clapperlogo.png">
-                <h2>Clapper application</h2>
-                <p>Lets try some searches</p>
+                <img src="{{movieXML.poster}}">
+                <h2>{{movieXML.name}}</h2>
+                <p><b>IMDB rating: </b>{{movieXML.rating}}</p>
             </div>
 
             <div class="item item-image" >
-                <img src="/img/clapperlogo.png" width="40" height="250">
+                <img src="{{movieXML.poster}}">
             </div>
+
+            <div class="item item-text-wrap">
+                <h3><b>Plot:</b></h3>
+                <p>{{movieXML.plot}}</p>
+            </div>
+            <div class="item item-divider">
+                <h4><b>Comments:</b></h4>
+                    <div class="item item-divider">
+                            <p ng-repeat="cmnt in comments">
+                                <b>User {{cmnt.id}}:</b>
+                                <br>
+                                {{cmnt.content}}
+                                <br>
+                            </p>
+                    </div>
+            </div>
+
         </div>
 
     </ion-content>
