@@ -25,7 +25,8 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('SearchMovies', function($scope, $http, Movie) {
+    //TODO passar para modulo movies
+.controller('SearchMoviesCtrl', function($scope, $http, Movie) {
 
         $scope.searchOpts = [
             {opt: 'title', optName: 'Movie Title'},
@@ -36,6 +37,7 @@ angular.module('starter.controllers', [])
         $scope.selectedOpt = $scope.searchOpts[0];
         $scope.movieXML = Movie.getMovie();
         $scope.comments = "";
+        $scope.comments = Movie.getComments();
 
         $scope.searchMovieBy = function(movie, selectedOpt){
             console.log('Searching ' + movie.searchText + ' and ' + selectedOpt.opt);
@@ -64,7 +66,9 @@ angular.module('starter.controllers', [])
                         $scope.movieXML.poster = xmlDoc.getElementsByTagName("urlPoster")[0].childNodes[0].nodeValue;
                         $scope.movieXML.rating = xmlDoc.getElementsByTagName("rating")[0].childNodes[0].nodeValue;
                         $scope.movieXML.plot = xmlDoc.getElementsByTagName("plot")[0].childNodes[0].nodeValue;
+                        $scope.movieXML.show = true;
                         $scope.comments = Movie.getComments();
+
                     console.log($scope.comments);
 
                 }).
@@ -76,5 +80,19 @@ angular.module('starter.controllers', [])
 
         }
     })
-
 ;
+
+/*
+add review:
+
+ app.controller("ReviewController", function(){
+
+ this.review = {};
+
+ this.addReview = function(product){
+ this.review.createdOn  = Date.now();
+ product.reviews.push(this.review);
+ this.review = {};
+ };
+ });
+ */

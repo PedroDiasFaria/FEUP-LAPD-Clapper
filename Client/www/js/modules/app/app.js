@@ -87,7 +87,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     views:{
         'search-movies':{
             templateUrl: 'templates/search-movies.html',
-            controller: 'SearchMovies'
+            controller: 'SearchMoviesCtrl'
         }
     }
       })

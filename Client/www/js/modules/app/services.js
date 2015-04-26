@@ -76,9 +76,9 @@ angular.module('starter.services', [])
 .factory('Movie', function(){
 
         var comments = [
-            {id: 'Rafa', content: 'Top'},
-            {id: 'Pedro', content: 'Meh'},
-            {id: 'Miguel', content: 'Fail'}
+            {id: 'Rafa', descrp: 'Top', content: 'Foi altamente', rating: 9, createdOn: 1397490980837},
+            {id: 'Pedro', descrp: 'Meh', content: 'Ate achei porreirito', rating:6.5, createdOn: 1397490980837 },
+            {id: 'Miguel', descrp: 'Fail', content: 'Um desastre', rating: 2.2, createdOn: 1397490980837}
         ];
 
         var movie = {
@@ -86,7 +86,8 @@ angular.module('starter.services', [])
             rating : 0,
             poster : "../img/clapperlogo.png",
             year: "",
-            plot: ""
+            plot: "",
+            show: false
         };
 
         return{
