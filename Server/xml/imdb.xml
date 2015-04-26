@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<movie>
+	<actors>
+		<actor>
+			<actorId>nm0005212</actorId>
+			<actorName>Ian McKellen</actorName>
+			<character>Sherlock Holmes</character>
+			<urlCharacter>http://www.imdb.com/character/ch0026631</urlCharacter>
+			<urlPhoto>http://ia.media-imdb.com/images/M/MV5BMTQ2MjgyNjk3MV5BMl5BanBnXkF
+			tZTcwNTA3NTY5Mg@@._V1_SY44_CR0,0,32,44_AL_.jpg</urlPhoto>
+			<urlProfile>http://www.imdb.com/name/nm0005212</urlProfile>
+		</actor>
+		<actor>
+			<actorId>nm6057785</actorId>
+			<actorName>Milo Parker</actorName>
+			<character>Roger</character>
+			<urlCharacter>http://www.imdb.com</urlCharacter>
+			<urlPhoto></urlPhoto>
+			<urlProfile>http://www.imdb.com/name/nm6057785</urlProfile>
+		</actor>
+	</actors>
+	<countries>
+		<country>UK</country>
+		<country>USA</country>
+	</countries>
+	<directors>
+		<director>
+			<name>Bill Condon</name>
+			<nameId>nm0174374</nameId>
+		</director>
+	</directors>
+	<filmingLocations>Sussex</filmingLocations>
+	<filmingLocations>England</filmingLocations>
+	<filmingLocations>UK</filmingLocations>
+	<genres>
+		<genre>Crime</genre>
+		<genre>Drama</genre>
+		<genre>Mystery</genre>
+	</genres>
+	<idIMDB>tt3168230</idIMDB>
+	<languages>
+		<language>English</language>
+		<language>Japanese</language>
+	</languages>
+	<metascore></metascore>
+	<originalTitle></originalTitle>
+	<plot>The story is actually set in 1947, following a long-retired Holmes living in a Sussex village
+	    with his housekeeper and rising detective son. But then he finds himself haunted by an unsolved
+	    50-year old case. Holmes memory isn't what it used to be, so he only remembers fragments of the
+	    case: a confrontation with an angry husband, a secret bond with his beautiful but unstable wife.
+	</plot>
+	<rated></rated>
+	<rating>8.6</rating>
+	<releaseDate>20150619</releaseDate>
+	<runtime>103 min</runtime>
+	<simplePlot>An aged, retired Sherlock Holmes looks back on his life, and grapples with an unsolved
+	    case involving a beautiful woman.
+	</simplePlot>
+	<title>Mr. Holmes</title>
+	<urlIMDB>http://www.imdb.com/title/tt3168230</urlIMDB>
+	<urlPoster>http://ia.media-imdb.com/images/M/MV5BMjAwMTc3MTc0Nl5BMl5BanBnXkFtZTgwNDE1NDg2NDE@._V1_SX
+	    214_AL_.jpg
+	</urlPoster>
+	<votes>450</votes>
+	<Writers>
+		<Writer>
+			<name>Mitch Cullin</name>
+			<nameId>nm1616194</nameId>
+		</Writer>
+		<Writer>
+			<name>Arthur Conan Doyle</name>
+			<nameId>nm0236279</nameId>
+		</Writer>
+	</Writers>
+	<year>2015</year>
+</movie>

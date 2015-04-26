@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<users>
+   <user userName="User1" userId="123">
+      <toSeeList>
+         <movieId>tt0988045</movieId>
+         <movieId>tt1515091</movieId>
+      </toSeeList>
+      <seenLint>
+         <movie>
+            <movieId>tt3168230</movieId>
+            <personalClassification>10</personalClassification>
+            <comment commentId="1">Cool movie</comment>
+         </movie>
+      </seenLint>
+  </user>  
+</users>
