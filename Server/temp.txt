@@ -2,10 +2,12 @@
  * Created by Pedro Faria on 26-04-2015.
  */
 
-var http = require('http');
-var fs = require('fs');
-var xml2js = require('xml2js');
+var http = require('http'),
+    fs = require('fs'),
+    xml2js = require('xml2js'),
+    eyes = require('eyes');
 //https://github.com/Leonidas-from-XIV/node-xml2js
+//http://blog.nodejitsu.com/6-must-have-nodejs-modules/
 
 //tratar o formato json só para enviar o necessário para a app
 /*
@@ -17,16 +19,16 @@ http.createServer(function(request, response) {
     response.writeHead(200);
 
     var parser = new xml2js.Parser();
-    parser.addListener('end', function(result) {
-        console.dir(result);
-        JSON.stringify(result);
-        console.log('Done.');
+
+    parser.on('end', function(result) {
+        eyes.inspect(result);
         response.write(JSON.stringify(result));
-    });
-    fs.readFile('../xml/imdb.xml', function(err, data) {
-        parser.parseString(data);
+        console.log('Done');
     });
 
+    fs.readFile(__dirname + '/xml/imdb.xml', function(err, data) {
+        parser.parseString(data);
+    });
 
 }).listen(8080);
 console.log('Server running at localhost:8080/');
