@@ -2,7 +2,6 @@
  * Created by Pedro Faria on 27-04-2015.
  */
 
-var Student = require('../models/user');
 var fs = require('fs'),
     xml2js = require('xml2js'),
     eyes = require('eyes');
@@ -30,6 +29,8 @@ module.exports.list = function(req, res) {
         res.json(result);
     });*/
 
+    res.write('entrou');
+    /*
     console.log('enter get');
     var parser = new xml2js.Parser();
 
@@ -41,7 +42,7 @@ module.exports.list = function(req, res) {
 
     fs.readFile('./xml/users.xml', function(err, data) {
         parser.parseString(data);
-    });
+    });*/
 }
 
 // DELETE student:id //
@@ -108,4 +109,12 @@ module.exports.getUserBySkill = function(req, res){
             res.send(err);
         res.json(result);
     });
+}
+
+module.exports.login = function(req, res){
+
+}
+
+module.exports.addRating = function(req, res){
+
 }

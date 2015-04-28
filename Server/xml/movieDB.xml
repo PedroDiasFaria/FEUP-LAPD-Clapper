@@ -12,9 +12,7 @@
 			<genre>Drama</genre>
 			<genre>Mystery</genre>
 		</genres>
-		<simplePlot>An aged, retired Sherlock Holmes looks back on his life, 
-		and grapples with an unsolved case involving a 
-		beautiful woman.</simplePlot>
+		<simplePlot>An aged, retired Sherlock Holmes looks back on his life, and grapples with an unsolved case involving a beautiful woman.</simplePlot>
 		<directors>
 			<director>
 				<name>Bill Condon</name> 
@@ -30,9 +28,7 @@
 				<character>Sherlock Holmes</character>
 				<urlCharacter>http://www.imdb.com/character/ch0026631
 				</urlCharacter>
-				<urlPhoto>http://ia.media-imdb.com/images/M/MV5BMTQ2M
-				jgyNjk3MV5BMl5BanBnXkFtZTcwNTA3NTY5Mg@@._V1_SY44_CR0,
-				0,32,44_AL_.jpg
+				<urlPhoto>http://ia.media-imdb.com/images/M/MV5BMTQ2MjgyNjk3MV5BMl5BanBnXkFtZTcwNTA3NTY5Mg@@._V1_SY44_CR0,0,32,44_AL_.jpg
 				</urlPhoto>
 				<urlProfile>http://www.imdb.com/name/nm0005212
 				</urlProfile>
@@ -48,12 +44,12 @@
 			</actor>
 		</actors>
 
-		<appRating></appRating>
+		<appRating>8</appRating>
 		<appTotalVotes>2</appTotalVotes>
 		<appTotalWatched>3</appTotalWatched>
 		<appTotalToWatch>5</appTotalToWatch>
 		<userComments>
-			<comment commentId="1" userId="123">
+			<comment commentId="1" userName="User1">
 				Cool movie
 			</comment>
 		</userComments>

@@ -2,96 +2,94 @@
  * Created by Pedro Faria on 27-04-2015.
  */
 
-var Student = require('../models/movie');
 var fs = require('fs'),
     xml2js = require('xml2js'),
     eyes = require('eyes');
 
-// POST student //
-module.exports.create = function(req, res) {
-    console.log(req.body);
-    var student = new Student();
-    student.username = req.body.username;
-    student.password = req.body.password;
-    student.email 	 = req.body.email;
-    student.save(function(err, result){
-        if(err)
-            res.send(err);
-        res.json("Student Created");
-    });
-}
+var http = require('http');
 
-// GET student //
-module.exports.list = function(req, res) {
-    Student.find(function(err, result){
-        if(err)
-            res.send(err);
-        res.json(result);
-    });
-}
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+var url = 'http://localhost:8080/exist/rest/db/existdb/';
 
-// DELETE student:id //
-module.exports.delete = function(req, res) {
-    Student.remove({_id: req.params.id}, function(err, result){
-        if(err)
-            res.send(err);
-        res.json("Student Removed");
-    });
-}
+//https://gist.github.com/klovadis/2549131
+//samwize.com/2013/09/01/how-you-can-pass-a-variable-into-callback-function-in-node-dot-js/
 
-// PUT student:id //
-module.exports.update = function(req, res) {
-    Student.update({_id: req.params.id}, {$set: {name: req.body.name}}, function(err, result){
-        if(err)
-            res.send(err);
-        res.json("Student Updated");
-    });
-}
+function xmlSearch(dbUrl, callback) {
 
-// GET student:id //
-module.exports.get = function(req, res){
-   /* Student.findById(req.params.id, function(err, result){
-        if(err)
-            res.send(err);
-        res.json(result);
-    });*/
-    console.log('enter get');
     var parser = new xml2js.Parser();
 
-    parser.on('end', function(result) {
-        eyes.inspect(result);
-        res.write(JSON.stringify(result));
-        console.log('Done');
+    //var xhr = new XMLHttpRequest();
+
+        parser.on('end', function (result) {
+            //eyes.inspect(result);
+
+            console.log('Done');
+            callback(JSON.stringify(result));
+        });
+
+    console.log('Sending request to:  ' + dbUrl);
+
+    //por handler de erro
+    //retorna null porque? xmlhttprequest?
+
+    http.get(dbUrl,  function(response) {
+        var str = '';
+
+        //another chunk of data has been recieved, so append it to `str`
+        response.on('data', function (chunk) {
+            str += chunk;
+        });
+
+        //the whole response has been recieved, so we just print it out here
+        response.on('end', function () {
+            console.log('Response was: ' + str);
+            parser.parseString(str);
+        });
+    }).end();
+
+    /*
+    xhr.onreadystatechange=function()
+    {
+        if (xhr.readyState==4 && xhr.status==200)
+        {
+            document.getElementById("myDiv").innerHTML=xhr.responseText;
+            parser.parseString(xhr.responseText);
+        }
+    }
+
+    xhr.open("GET",dbUrl, true);
+    xhr.send();*/
+
+    //em vez de read file, fazer request ao existdb
+        /*fs.readFile(dbUrl, function (err, data) {
+            parser.parseString(data);
+        });*/
+};
+
+
+module.exports.list = function (req, res) {
+    //req.query.varName // separar os dif requests
+    console.log('Request: ' + req.path + ' with params: ');
+
+    console.log('id=' + req.query.id);
+    console.log('name=' + req.query.name);
+
+    var queryUrl = url;
+    if(req.query.id){
+        queryUrl += 'getMovieById.xq?id=' + req.query.id;
+    }else
+        if(req.query.name){
+            queryUrl += 'getMovieByTitle.xq?title=' + req.query.name;
+        }
+
+
+    xmlSearch(queryUrl, function(xml){
+        console.log('AFTER XMLSEARCH - returning');
+        console.log(xml);
+        res.writeHead(200,{"Content-Type": "text/plain"});
+        res.end(xml);
+        //res.json(xml);
     });
 
-    fs.readFile('./xml/imdb.xml', function(err, data) {
-        parser.parseString(data);
-    });
-}
 
-// GET /seach/student/username/:username //
-module.exports.getUserByUsername = function(req, res){
-    Student.find({username: req.params.username}, function(err, result){
-        if(err)
-            res.send(err);
-        res.json(result);
-    });
-}
-
-// GET /seach/student/name/:name //
-module.exports.getUserByName = function(req, res){
-    Student.find({name: req.params.name}, function(err, result){
-        if(err)
-            res.send(err);
-        res.json(result);
-    });
-}
-
-// GET /seach/student/skill/:skill //
-module.exports.getUserBySkill = function(req, res){
-    Student.find({skills: { $in: [req.params.skill]}}, function(err, result){
-        if(err)
-            res.send(err);
-        res.json(result);
-    });
-}
+};

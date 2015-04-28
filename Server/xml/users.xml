@@ -5,12 +5,20 @@
          <movieId>tt0988045</movieId>
          <movieId>tt1515091</movieId>
       </toSeeList>
-      <seenLint>
+      <seenList>
          <movie>
             <movieId>tt3168230</movieId>
             <personalClassification>10</personalClassification>
-            <comment commentId="1">Cool movie</comment>
+            <comment>Cool movie</comment>
          </movie>
-      </seenLint>
-  </user>  
+          <movie>
+              <movieId>sdasd</movieId>
+              <personalClassification>2</personalClassification>
+          </movie>
+      </seenList>
+  </user>
+    <user userName="User2" userId="132" password="daowdkaok">
+        <toSeeList></toSeeList>
+        <seenList></seenList>
+    </user>
 </users>
