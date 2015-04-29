@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <users>
-   <user userName="User1" userId="123">
+   <user userName="User1" userId="123" password="@£§@£§">
       <toSeeList>
          <movieId>tt0988045</movieId>
          <movieId>tt1515091</movieId>

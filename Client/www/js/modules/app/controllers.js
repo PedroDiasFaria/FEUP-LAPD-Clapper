@@ -35,9 +35,13 @@ angular.module('starter.controllers', [])
         ];
 
         $scope.selectedOpt = $scope.searchOpts[0];
-        $scope.movieXML = Movie.getMovie();
+
+        $scope.movies = [];
         $scope.comments = "";
         $scope.comments = Movie.getComments();
+
+       //$scope.movieXML = Movie.getMovie();
+
 
         $scope.searchMovieBy = function(movie, selectedOpt){
             console.log('Searching ' + movie.searchText + ' and ' + selectedOpt.opt);
@@ -58,27 +62,50 @@ angular.module('starter.controllers', [])
                 success(function(data, status, headers, config) {
                     // this callback will be called asynchronously
                     // when the response is available
-                    console.log(data);
+                    //console.log(data);
                     /*if(window.DOMParser){
-                        parser = new DOMParser()
-                       // xmlDoc=parser.parseFromString(data,"text/xml");
-                    }*/
+                     parser = new DOMParser()
+                     // xmlDoc=parser.parseFromString(data,"text/xml");
+                     }*/
+                    console.log(data);
 
-                    $scope.movieXML.name = data.result.movie.title;
-                    $scope.movieXML.poster = data.result.movie.urlPoster;
-                    $scope.movieXML.rating = data.result.movie.imdbRating;
-                    $scope.movieXML.plot = data.result.movie.simplePlot;
-                    $scope.movieXML.show = true;
-/*
+                    if(data.result.movie.length > 1) {
+                        for (var i = 0; i < data.result.movie.length; i++) {
 
-                        $scope.movieXML.name = xmlDoc.getElementsByTagName("title")[0].childNodes[0].nodeValue;
-                        $scope.movieXML.poster = xmlDoc.getElementsByTagName("urlPoster")[0].childNodes[0].nodeValue;
-                        $scope.movieXML.rating = xmlDoc.getElementsByTagName("rating")[0].childNodes[0].nodeValue;
-                        $scope.movieXML.plot = xmlDoc.getElementsByTagName("plot")[0].childNodes[0].nodeValue;
-                        $scope.movieXML.show = true;
-                        $scope.comments = Movie.getComments();*/
+                            movie = {};
 
-                    console.log($scope.comments);
+
+                            movie.name = data.result.movie[i].title;
+                            movie.poster = data.result.movie[i].urlPoster;
+                            movie.rating = data.result.movie[i].imdbRating;
+                            movie.plot = data.result.movie[i].simplePlot;
+                            movie.appRating = data.result.movie[i].appRating;
+                            movie.show = true;
+
+                            console.log('Movie nr:' + i + 'is;');
+                            console.log(movie);
+
+                            $scope.movies.push(movie);
+
+
+                            //console.log($scope.comments);
+                        }
+                    }else{
+                        movie = {};
+
+
+                        movie.name = data.result.movie.title;
+                        movie.poster = data.result.movie.urlPoster;
+                        movie.rating = data.result.movie.imdbRating;
+                        movie.plot = data.result.movie.simplePlot;
+                        movie.plot = data.result.movei.appRating;
+                        movie.show = true;
+
+                        console.log('Movie nr:' + i + 'is;');
+                        console.log(movie);
+
+                        $scope.movies.push(movie);
+                    }
 
                 }).
                 error(function(data, status, headers, config) {
@@ -87,7 +114,10 @@ angular.module('starter.controllers', [])
                     console.log('err');
                 });
 
+            $scope.movies = [];
+
         }
+
     })
 ;
 

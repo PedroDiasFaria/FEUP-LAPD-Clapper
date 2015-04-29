@@ -21,22 +21,24 @@
             </button>
         </div>
 
-        <div class="list card" >
+        <div class="list card" ng-repeat="movie in movies">
 
             <div class="item item-avatar">
-                <img src="{{movieXML.poster}}">
-                <h2>{{movieXML.name}}</h2>
-                <p><b>IMDB rating: </b>{{movieXML.rating}}</p>
+                <img src="{{movie.poster}}">
+                <h2><b>{{movie.name}}</b></h2>
+                <p><b>IMDB rating: </b>{{movie.rating}}</p>
+                <p><b>Clapper rating: </b>{{movie.appRating}}</p>
             </div>
 
             <div class="item item-image" >
-                <img src="{{movieXML.poster}}">
+                <img src="{{movie.poster}}">
             </div>
 
             <div class="item item-text-wrap">
                 <h3><b>Plot:</b></h3>
-                <p>{{movieXML.plot}}</p>
+                <p>{{movie.plot}}</p>
             </div>
+
 
             <div class="item item-divider">
                 <h3><b>Comments:</b></h3>
