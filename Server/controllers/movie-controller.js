@@ -4,12 +4,15 @@
 
 var fs = require('fs'),
     xml2js = require('xml2js'),
-    eyes = require('eyes');
+    eyes = require('eyes'),
+    http = require('http'),
+    XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest,
+    request = require('request');
 
-var http = require('http');
-
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var url = 'http://localhost:8080/exist/rest/db/existdb/';
+var countReq = 0;
+var existUsername = 'admin';
+var existPassword = '';
 
 //https://gist.github.com/klovadis/2549131
 //samwize.com/2013/09/01/how-you-can-pass-a-variable-into-callback-function-in-node-dot-js/
@@ -45,7 +48,7 @@ function xmlSearch(dbUrl, callback) {
             console.log('Response was: ' + str);
             parser.parseString(str);
         });
-    }).end();
+    }).auth(existUsername, existPassword, true);
 
     /*
     xhr.onreadystatechange=function()
@@ -66,9 +69,10 @@ function xmlSearch(dbUrl, callback) {
         });*/
 };
 
-
+/*
 module.exports.list = function (req, res) {
-    //req.query.varName // separar os dif requests
+    //req.query.varName // separar os dif requests.
+    console.log('ReqNr: ' + (++countReq));
     console.log('Request: ' + req.path + ' with params: ');
 
     console.log('id=' + req.query.id);
@@ -92,4 +96,44 @@ module.exports.list = function (req, res) {
     });
 
 
+};*/
+
+module.exports.list = function(req, res) {
+  /*  var xpath = { _query: 'movieId=' + req.query.id,
+        _wrap: 'no'};
+
+    console.log(xpath);*/
+
+    console.log('ReqNr: ' + (++countReq));
+    console.log('Request: ' + req.path + ' with params: ');
+
+    console.log('id=' + req.query.id);
+    console.log('name=' + req.query.name);
+
+    var queryUrl = url;
+    if(req.query.id){
+        queryUrl += 'getMovieById.xq?id=' + req.query.id;
+    }else
+    if(req.query.name){
+        queryUrl += 'getMovieByTitle.xq?title=' + req.query.name;
+    }
+
+    console.log('Request to:' + queryUrl);
+    //caso nao encontre, request online, fazer post na bd e retornar esse filme
+    request.get({url:queryUrl},  function (error, response, body) {
+        if(response.statusCode == 200 && body != ""){
+            xml2js.parseString(body, {explicitArray: false}, function (err, result) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(result);
+                    res.send(result);
+                }
+            });
+        } else {
+            console.log('error: '+ response.statusCode);
+            console.log(body);
+            res.send({error: "This movie doesn't exist!"});
+        }
+    }).auth(existUsername, existPassword, true);
 };

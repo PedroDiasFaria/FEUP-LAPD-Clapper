@@ -29,8 +29,8 @@ angular.module('starter.controllers', [])
 .controller('SearchMoviesCtrl', function($scope, $http, Movie) {
 
         $scope.searchOpts = [
-            {opt: 'title', optName: 'Movie Title'},
-            {opt: 'idIMDB', optName: 'Movie ID'},
+            {opt: 'name', optName: 'Movie Title'},
+            {opt: 'id', optName: 'Movie ID'},
             {opt: 'name', optName: 'Actor Name'}
         ];
 
@@ -48,26 +48,35 @@ angular.module('starter.controllers', [])
         }
 
         $scope.getMovie = function(text, option){
-            var url = 'http://www.myapifilms.com/imdb?' + option + '=' + text + '&format=XML';
+            /*var url = 'http://www.myapifilms.com/imdb?' + option + '=' + text + '&format=XML';
 
-            console.log('Request to: ' + url);
+            console.log('Request to: ' + url);*/
+
+            var url = 'http://localhost:3000/api/movie?' + option + '=' + text;
 
             $http.get(url).
                 success(function(data, status, headers, config) {
                     // this callback will be called asynchronously
                     // when the response is available
                     console.log(data);
-                    if(window.DOMParser){
+                    /*if(window.DOMParser){
                         parser = new DOMParser()
-                        xmlDoc=parser.parseFromString(data,"text/xml");
-                    }
+                       // xmlDoc=parser.parseFromString(data,"text/xml");
+                    }*/
+
+                    $scope.movieXML.name = data.result.movie.title;
+                    $scope.movieXML.poster = data.result.movie.urlPoster;
+                    $scope.movieXML.rating = data.result.movie.imdbRating;
+                    $scope.movieXML.plot = data.result.movie.simplePlot;
+                    $scope.movieXML.show = true;
+/*
 
                         $scope.movieXML.name = xmlDoc.getElementsByTagName("title")[0].childNodes[0].nodeValue;
                         $scope.movieXML.poster = xmlDoc.getElementsByTagName("urlPoster")[0].childNodes[0].nodeValue;
                         $scope.movieXML.rating = xmlDoc.getElementsByTagName("rating")[0].childNodes[0].nodeValue;
                         $scope.movieXML.plot = xmlDoc.getElementsByTagName("plot")[0].childNodes[0].nodeValue;
                         $scope.movieXML.show = true;
-                        $scope.comments = Movie.getComments();
+                        $scope.comments = Movie.getComments();*/
 
                     console.log($scope.comments);
 

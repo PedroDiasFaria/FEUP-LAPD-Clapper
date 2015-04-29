@@ -1,4 +1,5 @@
-<movies><movie><movieId>tt3168230</movieId><url>http://www.imdb.com/title/tt3168230</url><title>Mr. Holmes</title><year>2015</year><releaseDate>20150619</releaseDate><runtime>103 min</runtime><genres><genre>Crime</genre><genre>Drama</genre><genre>Mystery</genre></genres><simplePlot>An aged, retired Sherlock Holmes looks back on his life, 
+<movies><movie><movieId>tt3168230</movieId><url>http://www.imdb.com/title/tt3168230</url><title>Mr. Holmes</title><year>2015</year>
+<urlPoster>http://ia.media-imdb.com/images/M/MV5BMjAwMTc3MTc0Nl5BMl5BanBnXkFtZTgwNDE1NDg2NDE@._V1_SX214_AL_.jpg</urlPoster><releaseDate>20150619</releaseDate><runtime>103 min</runtime><genres><genre>Crime</genre><genre>Drama</genre><genre>Mystery</genre></genres><simplePlot>An aged, retired Sherlock Holmes looks back on his life, 
 		and grapples with an unsolved case involving a 
 		beautiful woman.</simplePlot><directors><director><name>Bill Condon</name><nameId>nm0174374</nameId></director></directors><imdbRating>8.6</imdbRating><imdbTotalVotes>450</imdbTotalVotes><actors><actor><actorId>nm0005212</actorId><actorName>Ian McKellen</actorName><character>Sherlock Holmes</character><urlCharacter>http://www.imdb.com/character/ch0026631
 				</urlCharacter><urlPhoto>http://ia.media-imdb.com/images/M/MV5BMTQ2M
@@ -8,7 +9,7 @@
 				</urlProfile></actor><actor><actorId>nm6057785</actorId><actorName>Milo Parker</actorName><character>Roger</character><urlCharacter>http://www.imdb.com</urlCharacter><urlPhoto/><urlProfile>http://www.imdb.com/name/nm6057785
 				</urlProfile></actor></actors><appRating/><appTotalVotes>2</appTotalVotes><appTotalWatched>3</appTotalWatched><appTotalToWatch>5</appTotalToWatch><userComments><comment commentId="1" userId="123">
 				Cool movie
-			</comment></userComments></movie><movie><movieId>tt3162230</movieId><url>http://www.imdb.com/title/tt3168230</url><title>Mr. Paulo</title><year>2015</year><releaseDate>20150619</releaseDate><runtime>103 min</runtime><genres><genre>Crime</genre><genre>Drama</genre><genre>Mystery</genre></genres><simplePlot>An aged, retired Sherlock Holmes looks back on his life, 
+			</comment></userComments></movie><movie><movieId>tt3162230</movieId><url>http://www.imdb.com/title/tt3168230</url><title>Mr. Paulo</title><year>2015</year><urlPoster>http://ia.media-imdb.com/images/M/MV5BMTkxNDYxOTA4M15BMl5BanBnXkFtZTgwNTk0NzQxMTE@._V1_SX214_AL_.jpg</urlPoster><releaseDate>20150619</releaseDate><runtime>103 min</runtime><genres><genre>Crime</genre><genre>Drama</genre><genre>Mystery</genre></genres><simplePlot>An aged, retired Sherlock Holmes looks back on his life, 
 		and grapples with an unsolved case involving a 
 		beautiful woman.</simplePlot><directors><director><name>Bill Condon</name><nameId>nm0174374</nameId></director></directors><imdbRating>8.6</imdbRating><imdbTotalVotes>450</imdbTotalVotes><actors><actor><actorId>nm0005212</actorId><actorName>Ian McKellen</actorName><character>Sherlock Holmes</character><urlCharacter>http://www.imdb.com/character/ch0026631
 				</urlCharacter><urlPhoto>http://ia.media-imdb.com/images/M/MV5BMTQ2M
