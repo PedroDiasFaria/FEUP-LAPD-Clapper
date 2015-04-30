@@ -126,14 +126,27 @@ module.exports.list = function(req, res) {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log(result);
-                    res.send(result);
+                    if(!result.status) {
+                        console.log(result);
+                        res.send(result);
+                    }else{
+
+                        console.log(result);
+                        res.send(result);
+                        /*
+                        caso nao encontre na bd. fazer funçao para procurar na myapifilms
+                        var url = 'http://www.myapifilms.com/imdb?' + 'title' + '=' + req.query.name + '&format=XML';
+
+                        console.log('Request to: ' + url);*/
+                    }
                 }
             });
         } else {
+
             console.log('error: '+ response.statusCode);
             console.log(body);
             res.send({error: "This movie doesn't exist!"});
+
         }
     }).auth(existUsername, existPassword, true);
 };

@@ -30,8 +30,7 @@ angular.module('starter.controllers', [])
 
         $scope.searchOpts = [
             {opt: 'name', optName: 'Movie Title'},
-            {opt: 'id', optName: 'Movie ID'},
-            {opt: 'name', optName: 'Actor Name'}
+            {opt: 'id', optName: 'Movie ID'}
         ];
 
         $scope.selectedOpt = $scope.searchOpts[0];
@@ -69,44 +68,51 @@ angular.module('starter.controllers', [])
                      }*/
                     console.log(data);
 
-                    if(data.result.movie.length > 1) {
-                        for (var i = 0; i < data.result.movie.length; i++) {
+                    if(!data.status) {
+                        if (data.result.movie.length > 1) {
+                            for (var i = 0; i < data.result.movie.length; i++) {
 
+                                movie = {};
+
+
+                                movie.name = data.result.movie[i].title;
+                                movie.poster = data.result.movie[i].urlPoster;
+                                movie.rating = data.result.movie[i].imdbRating;
+                                movie.plot = data.result.movie[i].simplePlot;
+                                movie.appRating = data.result.movie[i].appRating;
+                                movie.show = true;
+
+                                console.log('Movie nr:' + i + 'is;');
+                                console.log(movie);
+
+                                $scope.movies.push(movie);
+
+
+                                //console.log($scope.comments);
+                            }
+                        } else {
                             movie = {};
 
 
-                            movie.name = data.result.movie[i].title;
-                            movie.poster = data.result.movie[i].urlPoster;
-                            movie.rating = data.result.movie[i].imdbRating;
-                            movie.plot = data.result.movie[i].simplePlot;
-                            movie.appRating = data.result.movie[i].appRating;
+                            movie.name = data.result.movie.title;
+                            movie.poster = data.result.movie.urlPoster;
+                            movie.rating = data.result.movie.imdbRating;
+                            movie.plot = data.result.movie.simplePlot;
+                            movie.appRating = data.result.movie.appRating;
                             movie.show = true;
 
-                            console.log('Movie nr:' + i + 'is;');
+                            console.log('Movie is;');
                             console.log(movie);
 
                             $scope.movies.push(movie);
-
-
-                            //console.log($scope.comments);
                         }
                     }else{
                         movie = {};
 
 
-                        movie.name = data.result.movie.title;
-                        movie.poster = data.result.movie.urlPoster;
-                        movie.rating = data.result.movie.imdbRating;
-                        movie.plot = data.result.movie.simplePlot;
-                        movie.plot = data.result.movei.appRating;
-                        movie.show = true;
-
-                        console.log('Movie nr:' + i + 'is;');
-                        console.log(movie);
-
+                        movie.name = data.status;
                         $scope.movies.push(movie);
                     }
-
                 }).
                 error(function(data, status, headers, config) {
                     // called asynchronously if an error occurs
