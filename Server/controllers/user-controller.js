@@ -4,117 +4,212 @@
 
 var fs = require('fs'),
     xml2js = require('xml2js'),
-    eyes = require('eyes');
+    js2xmlparser = require('js2xmlparser'),
+    eyes = require('eyes'),
+    http = require('http'),
+    XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest,
+    request = require('request');
 
-// POST student //
-module.exports.create = function(req, res) {
-    console.log(req.body);
-    var student = new Student();
-    student.username = req.body.username;
-    student.password = req.body.password;
-    student.email 	 = req.body.email;
-    student.save(function(err, result){
-        if(err)
-            res.send(err);
-        res.json("Student Created");
-    });
-}
+var dbUrl = 'http://localhost:8080/exist/rest/db/existdb/';
+var movieIdQuery = 'getMovieById.xq?id=';
+var countReq = 0;
+var existUsername = 'admin';
+var existPassword = '';
 
-//nao retorna?? mas encontra
-// GET student //
-module.exports.list = function(req, res) {
-    /*Student.find(function(err, result){
-        if(err)
-            res.send(err);
-        res.json(result);
-    });*/
+var getUserQuery = 'getUserById.xq?id=';
+var loginQuery = '';
+var registerQuery = '';
+var addUnseenQuery = '';
+var removeUnseenQuery = '';
+var addSeenQuery = '';
+var updateSeenQuery = '';
+var getUnseenQuery = '';
+var getSeenQuery = '';
 
-    res.write('entrou');
-    /*
-    console.log('enter get');
-    var parser = new xml2js.Parser();
-
-    parser.on('end', function(result) {
-        eyes.inspect(result);
-        res.write(JSON.stringify(result));
-        console.log('Done');
-    });
-
-    fs.readFile('./xml/users.xml', function(err, data) {
-        parser.parseString(data);
-    });*/
-}
-
-// DELETE student:id //
-module.exports.delete = function(req, res) {
-    Student.remove({_id: req.params.id}, function(err, result){
-        if(err)
-            res.send(err);
-        res.json("Student Removed");
-    });
-}
-
-// PUT student:id //
-module.exports.update = function(req, res) {
-    Student.update({_id: req.params.id}, {$set: {name: req.body.name}}, function(err, result){
-        if(err)
-            res.send(err);
-        res.json("Student Updated");
-    });
-}
-
-// GET student:id //
-module.exports.get = function(req, res){
-     /*Student.findById(req.params.id, function(err, result){
-        if(err)
-            res.send(err);
-         res.json(result);
-     });*/
-    console.log('enter get');
-    var parser = new xml2js.Parser();
-
-    parser.on('end', function(result) {
-        eyes.inspect(result);
-        res.write(JSON.stringify(result));
-        console.log('Done');
-    });
-
-    fs.readFile('./xml/users.xml', function(err, data) {
-        parser.parseString(data);
-    });
-}
-
-// GET /seach/student/username/:username //
-module.exports.getUserByUsername = function(req, res){
-    Student.find({username: req.params.username}, function(err, result){
-        if(err)
-            res.send(err);
-        res.json(result);
-    });
-}
-
-// GET /seach/student/name/:name //
-module.exports.getUserByName = function(req, res){
-    Student.find({name: req.params.name}, function(err, result){
-        if(err)
-            res.send(err);
-        res.json(result);
-    });
-}
-
-// GET /seach/student/skill/:skill //
-module.exports.getUserBySkill = function(req, res){
-    Student.find({skills: { $in: [req.params.skill]}}, function(err, result){
-        if(err)
-            res.send(err);
-        res.json(result);
-    });
-}
+//todo: em todas as rotas mandar o id do user?
+//https://github.com/Acaldas/LAPD/blob/master/server/controllers/movies.js
 
 module.exports.login = function(req, res){
 
+    console.log('ReqNr: ' + (++countReq));
+    console.log('Request: ' + req.path + ' with params: ');
+
+};
+
+module.exports.register = function(req, res){
+
+    console.log('ReqNr: ' + (++countReq));
+    console.log('Request: ' + req.path + ' with params: ');
+
+};
+
+//receives movie id
+module.exports.addUnseen = function(req, res){
+
+    console.log('ReqNr: ' + (++countReq));
+    console.log('Request: ' + req.path + ' with params: ');
+
+    var queryUrl = '';
+
+    //falta definir query
+    if(req.params.id && req.query.movieId ){
+
+        //fazer callback com post para o servidor e responder ok
+        queryUrl =  dbUrl + addUnseenQuery + 'id=' + req.params.id + '&movieId=' + req.query.movieId;
+    }else{
+        res.send({error: "error on /api/user/addUnseen: Wrong parameter. Send (user) id and movieId!"});
+    }
+
+    console.log('Request to:' + queryUrl);
+
+    res.send('addUnseen Successful\n' + queryUrl );
+};
+
+//receives movie id
+module.exports.removeUnseen = function(req, res){
+
+    console.log('ReqNr: ' + (++countReq));
+    console.log('Request: ' + req.path + ' with params: ');
+
+    var queryUrl = '';
+
+    //falta definir query
+    if(req.params.id && req.query.movieId ){
+
+        //fazer callback com post para o servidor e responder ok
+        queryUrl =  dbUrl + removeUnseenQuery + 'id=' + req.params.id + '&movieId=' + req.query.movieId;
+    }else{
+        res.send({error: "error on /api/user/removeUnseen: Wrong parameter. Send (user) id and movieId!"});
+    }
+
+    console.log('Request to:' + queryUrl);
+
+    res.send('removeUnseen Successful\n' + queryUrl );
+
+};
+
+//receives id (optional: rating and comment)
+module.exports.addSeen = function(req, res){
+
+    console.log('ReqNr: ' + (++countReq));
+    console.log('Request: ' + req.path + ' with params: ');
+
+    var queryUrl = '';
+
+    //falta definir query
+    if(req.params.id && req.query.movieId ){
+
+        //fazer callback com post para o servidor e responder ok
+        queryUrl =  dbUrl + addSeenQuery + 'id=' + req.params.id + '&movieId=' + req.query.movieId;
+
+        if(req.query.classification){
+            queryUrl += '&personalClassification=' + req.query.classification;
+        }
+        if(req.query.comment){
+            queryUrl += '&comment=' + req.query.comment;
+        }
+
+    }else{
+        res.send({error: "error on /api/user/addSeen: Wrong parameter. Send (user) id and movieId (optional: classification & comment)!"});
+    }
+
+    console.log('Request to:' + queryUrl);
+
+    res.send('addSeen Successful\n' + queryUrl );
+
 }
 
-module.exports.addRating = function(req, res){
+module.exports.updateSeen = function (req, res) {
 
-}
+    console.log('ReqNr: ' + (++countReq));
+    console.log('Request: ' + req.path + ' with params: ');
+
+};
+
+module.exports.getUnseen = function(req, res){
+
+    console.log('ReqNr: ' + (++countReq));
+    console.log('Request: ' + req.path + ' with params: ' + req.params.id);
+
+    var queryUrl = '';
+
+    //falta definir query
+    if(req.params.id){
+        queryUrl =  dbUrl + getUnseenQuery + req.params.id;
+    }else{
+        res.send({error: "error on /api/user/getUnseen: Wrong parameter. Search by (user) id only!"});
+    }
+
+    console.log('Request to:' + queryUrl);
+
+    request.get({url:queryUrl},  function (error, response, body) {
+        if(response.statusCode == 200 && body != ""){;
+            xml2js.parseString(body, {explicitArray: false}, function (err, result) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    if(!result.status) {
+                        console.log(result)
+                        res.send(result);
+
+                    }else{
+
+                        console.log(result.status);
+                        res.send(result);
+                    }
+                }
+            });
+        } else {
+
+            console.log('error: '+ response.statusCode);
+            console.log(body);
+            res.send({error: "This user doesn't exist!"});
+
+        }
+    }).auth(existUsername, existPassword, true);
+
+};
+
+module.exports.getSeen = function (req, res) {
+
+    console.log('ReqNr: ' + (++countReq));
+    console.log('Request: ' + req.path + ' with params: ');
+
+    var queryUrl = '';
+
+    //falta definir query
+    if(req.params.id){
+        queryUrl =  dbUrl + getSeenQuery + req.params.id;
+    }else{
+        res.send({error: "error on /api/user/getSeen: Wrong parameter. Search by (user) id only!"});
+    }
+
+    console.log('Request to:' + queryUrl);
+
+    request.get({url:queryUrl},  function (error, response, body) {
+        if(response.statusCode == 200 && body != ""){;
+            xml2js.parseString(body, {explicitArray: false}, function (err, result) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    if(!result.status) {
+                        console.log(result)
+                        res.send(result);
+
+                    }else{
+
+                        console.log(result.status);
+                        res.send(result);
+                    }
+                }
+            });
+        } else {
+
+            console.log('error: '+ response.statusCode);
+            console.log(body);
+            res.send({error: "This user doesn't exist!"});
+        }
+    }).auth(existUsername, existPassword, true);
+
+
+};

@@ -9,14 +9,22 @@ var fs = require('fs'),
     XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest,
     request = require('request');
 
-var url = 'http://localhost:8080/exist/rest/db/existdb/';
+var dbUrl = 'http://localhost:8080/exist/rest/db/existdb/';
 var countReq = 0;
 var existUsername = 'admin';
 var existPassword = '';
+var movieIdQuery = 'getMovieById.xq?id=';
+//mudar parametro name para title no frontend!
+var movieTitleQuery = 'getMovieByTitle.xq?title=';
+var movieGenreQuery = '';
+var movieDirectorQuery = '';
+var movieActorQuery = '';
+
+//TODO resposta das query de varios filmes, que responda cada <movie></movie> separado, e nao num array
 
 //https://gist.github.com/klovadis/2549131
 //samwize.com/2013/09/01/how-you-can-pass-a-variable-into-callback-function-in-node-dot-js/
-
+/*
 function xmlSearch(dbUrl, callback) {
 
     var parser = new xml2js.Parser();
@@ -49,7 +57,7 @@ function xmlSearch(dbUrl, callback) {
             parser.parseString(str);
         });
     }).auth(existUsername, existPassword, true);
-
+ };
     /*
     xhr.onreadystatechange=function()
     {
@@ -67,7 +75,7 @@ function xmlSearch(dbUrl, callback) {
         /*fs.readFile(dbUrl, function (err, data) {
             parser.parseString(data);
         });*/
-};
+
 
 /*
 module.exports.list = function (req, res) {
@@ -98,24 +106,34 @@ module.exports.list = function (req, res) {
 
 };*/
 
+//List all movies with parameter
 module.exports.list = function(req, res) {
-  /*  var xpath = { _query: 'movieId=' + req.query.id,
-        _wrap: 'no'};
 
-    console.log(xpath);*/
+    //parametros a aceitar: genero, nome, atores
 
     console.log('ReqNr: ' + (++countReq));
     console.log('Request: ' + req.path + ' with params: ');
 
-    console.log('id=' + req.query.id);
-    console.log('name=' + req.query.name);
+    console.log('title=' + req.query.title);
+    console.log('genre='+ req.query.genre);
+    console.log('actor='+ req.query.actor);
 
-    var queryUrl = url;
-    if(req.query.id){
-        queryUrl += 'getMovieById.xq?id=' + req.query.id;
+    var queryUrl = '';
+    if(req.query.genre){
+        //queryUrl += 'getMovieById.xq?id=' + req.query.id;
+        //query de genero
+        queryUrl = dbUrl + movieGenreQuery + req.query.genre;
     }else
-    if(req.query.name){
-        queryUrl += 'getMovieByTitle.xq?title=' + req.query.name;
+    if(req.query.title){
+        queryUrl = dbUrl + movieTitleQuery + req.query.title;
+    }else
+    if(req.query.actor){
+        queryUrl = dbUrl + movieActorQuery + req.query.actor;
+    }else
+    if(req.query.director){
+        queryUrl = dbUrl + movieDirectorQuery + req.query.actor;
+    }else{
+        res.send({error: "error on /api/movie/list: Wrong parameter. Search by title/genre/actor/director only!"});
     }
 
     console.log('Request to:' + queryUrl);
@@ -135,6 +153,7 @@ module.exports.list = function(req, res) {
                         res.send(result);
                         /*
                         caso nao encontre na bd. fazer funçao para procurar na myapifilms
+                        //isto só para procura com titulo!
                         var url = 'http://www.myapifilms.com/imdb?' + 'title' + '=' + req.query.name + '&format=XML';
 
                         console.log('Request to: ' + url);*/
@@ -146,6 +165,47 @@ module.exports.list = function(req, res) {
             console.log('error: '+ response.statusCode);
             console.log(body);
             res.send({error: "This movie doesn't exist!"});
+
+        }
+    }).auth(existUsername, existPassword, true);
+};
+
+//Get movie by id
+module.exports.get = function(req, res) {
+
+    console.log('ReqNr: ' + (++countReq));
+    console.log('Request: ' + req.path + ' with params: ');
+    console.log('id=' + req.params.id);
+
+    var queryUrl = '';
+    if(req.params.id){
+        queryUrl = dbUrl + movieIdQuery + req.params.id;
+    }else{
+        res.send({error: "error on /api/movie/:id: Wrong parameter. Search by ID only!"});
+    }
+
+    console.log('Request to:' + queryUrl);
+    request.get({url:queryUrl},  function (error, response, body) {
+        if(response.statusCode == 200 && body != ""){
+            xml2js.parseString(body, {explicitArray: false}, function (err, result) {
+                console.log(result);
+
+                if (err) {
+                    console.log(err);
+                } else {
+                    if(!result.status) {
+                        console.log(result);
+                        res.send(result);
+                    }else{
+                        console.log(result);
+                        res.send(result);
+                    }
+                }
+            });
+        } else {
+            console.log('error: '+ response.statusCode);
+            console.log(body);
+            res.send({error: "error on /api/movie/:id: This movie doesn't exist!"});
 
         }
     }).auth(existUsername, existPassword, true);

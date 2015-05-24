@@ -16,19 +16,19 @@ var server = app.listen(3000, function () {
 
 
 // Users ================================================================================ //
-/*
+
 app.post('/api/user/login', userController.login);      //Login
 app.post('/api/user/register', userController.register);      //Registo - será put para o XML
 app.post('/api/user/addUnseen/:id', userController.addUnseen);  //Add movie with id to unseen list
 app.delete('/api/user/removeUnseen/:id', userController.removeUnseen);  //Remove movie with id from unseen list
-app.post('/api/user/addSeen/', userController.addSeen);         //Add movie with id (and can have rating/comment) to seen list
+app.post('/api/user/addSeen/:id', userController.addSeen);         //Add movie with id (and can have rating/comment) to seen list
 app.put('/api/user/updateSeen/', userController.updateSeen);    //Update rating/comment from a movie with id
-app.get('/api/user/getUnseen', userController.getUnseen);
-app.get('/api/user/getSeen', userController.getSeen);*/
+app.get('/api/user/getUnseen/:id', userController.getUnseen);       //Get unseen movie list from user with id
+app.get('/api/user/getSeen/:id', userController.getSeen);           //Get seen movie list from user with id
 
 
 // Movies ================================================================================ //
-//app.get('/api/movie/:id', movieController.get);				      //	 Get a Movie by ID (field)   //
+app.get('/api/movie/:id', movieController.get);				      //	 Get a Movie by ID (field)   //
 app.get('/api/movie/', movieController.list); 				        //   Get a Movie by a param / all movies   //
 
 /*

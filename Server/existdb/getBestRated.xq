@@ -1,7 +1,7 @@
 xquery version "3.0";
 
- let $movies := doc('movieDB.xml')
- let $users := doc('users.xml')
+ let $movies := doc('clapperDB.xml')//movies
+ let $users := doc('clapperDB.xml')//users
  
  let $ordered_movies := 
  <movies> 
@@ -30,5 +30,4 @@ xquery version "3.0";
                     </movie> 
         }
         </best_rated>
- 
-               
+       

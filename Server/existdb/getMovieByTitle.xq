@@ -3,8 +3,8 @@ declare namespace request="http://exist-db.org/xquery/request";
 
 declare option exist:serialize "method=xml media-type=text/xml indent=yes";
 
-let $moviesDB := doc('movieDB.xml')
-let $title := request:get-parameter('title', '--')
+let $moviesDB := doc('clapperDB.xml')//movies
+let $title := request:get-parameter('title', 'Mr')
 
 let $movies := $moviesDB//movies/movie[matches(title,$title,'i')]
             
