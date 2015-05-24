@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root>
+	<movies>
+		<movie>
+			<movieId>tt3168230</movieId>
+			<url>http://www.imdb.com/title/tt3168230</url>
+			<urlPoster>http://ia.media-imdb.com/images/M/MV5BMjAwMTc3MTc0Nl5BMl5BanBnXkFtZTgwNDE1NDg2NDE@._V1_SX214_AL_.jpg</urlPoster>
+			<title>Mr. Holmes</title>
+			<year>2015</year>
+			<releaseDate>20150619</releaseDate>
+			<runtime>103 min</runtime>
+			<genres>
+				<genre>Crime</genre>
+				<genre>Drama</genre>
+				<genre>Mystery</genre>
+			</genres>
+			<simplePlot>An aged, retired Sherlock Holmes looks back on his life, and grapples with an unsolved case involving a beautiful woman.</simplePlot>
+			<plot>The story is actually set in 1947, following a long-retired Holmes living in a Sussex village with his housekeeper and rising detective son. But then he finds himself haunted by an unsolved 50-year old case. Holmes memory isn't what it used to be, so he only remembers fragments of the case: a confrontation with an angry husband, a secret bond with his beautiful but unstable wife.</plot>
+			<directors>
+				<director>
+					<name>Bill Condon</name> 
+					<nameId>nm0174374</nameId>
+				</director>
+			</directors>
+			<imdbRating>8.6</imdbRating>
+			<imdbTotalVotes>450</imdbTotalVotes>
+			<actors>
+				<actor>
+					<actorId>nm0005212</actorId>
+					<actorName>Ian McKellen</actorName>
+					<character>Sherlock Holmes</character>
+					<urlCharacter>http://www.imdb.com/character/ch0026631
+					</urlCharacter>
+					<urlPhoto>http://ia.media-imdb.com/images/M/MV5BMTQ2MjgyNjk3MV5BMl5BanBnXkFtZTcwNTA3NTY5Mg@@._V1_SY44_CR0,0,32,44_AL_.jpg
+					</urlPhoto>
+					<urlProfile>http://www.imdb.com/name/nm0005212
+					</urlProfile>
+				</actor>
+				<actor>
+					<actorId>nm6057785</actorId>
+					<actorName>Milo Parker</actorName>
+					<character>Roger</character>
+					<urlCharacter>http://www.imdb.com</urlCharacter>
+					<urlPhoto></urlPhoto>
+					<urlProfile>http://www.imdb.com/name/nm6057785
+					</urlProfile>
+				</actor>
+			</actors>
+
+			<appRating>8</appRating>
+			<appTotalVotes>2</appTotalVotes>
+			<appTotalWatched>3</appTotalWatched>
+			<appTotalToWatch>5</appTotalToWatch>
+			<userComments>
+				<comment commentId="1" userName="User1">
+					Cool movie
+				</comment>
+			</userComments>
+		</movie>
+
+		<movie>
+			<movieId>tt0988045</movieId>
+			<url>http://www.imdb.com/title/tt0988045</url>
+			<urlPoster>http://ia.media-imdb.com/images/M/MV5BMTg0NjEwNjUxM15BMl5BanBnXkFtZTcwMzk0MjQ5Mg@@._V1_SX214_AL_.jpg</urlPoster>
+			<title>Sherlock Holmes</title>
+			<year>2009</year>
+			<releaseDate>20091225</releaseDate>
+			<runtime>128 min</runtime>
+			<genres>
+				<genre>Action</genre>
+				<genre>Adventure</genre>
+				<genre>Crime</genre>
+				<genre>Mystery</genre>
+				<genre>Thriller</genre>
+			</genres>
+			<simplePlot>
+				Detective Sherlock Holmes and his stalwart partner Watson engage in a battle of wits and brawn with a nemesis whose plot is a threat to all of England.
+			</simplePlot>
+			<plot>
+				After finally catching serial killer and occult &quot;sorcerer&quot; Lord Blackwood, legendary sleuth Sherlock Holmes and his assistant Dr. Watson can close yet another successful case. But when Blackwood mysteriously returns from the grave and resumes his killing spree, Holmes must take up the hunt once again. Contending with his partner's new fiancée and the dimwitted head of Scotland Yard, the dauntless detective must unravel the clues that will lead him into a twisted web of murder, deceit, and black magic - and the deadly embrace of temptress Irene Adler.
+			</plot>
+			<directors>
+				<director>
+					<name>Guy Ritchie</name>
+					<nameId>nm0005363</nameId>
+				</director>
+			</directors>
+			<imdbRating>7.6</imdbRating>
+			<imdbTotalVotes>413267</imdbTotalVotes>
+			<actors>
+				<actor>
+					<actorId>nm0000375</actorId>
+					<actorName>Robert Downey Jr.</actorName>
+					<character>Sherlock Holmes</character>
+					<urlCharacter>http://www.imdb.com/character/ch0026631</urlCharacter>
+					<urlPhoto>http://ia.media-imdb.com/images/M/MV5BMTAwNjk2NTUyMzleQTJeQWpwZ15BbWU3MDQ2NzQzMTc@._V1_SX32_CR0,0,32,44_AL_.jpg</urlPhoto>
+					<urlProfile>http://www.imdb.com/name/nm0000375</urlProfile>
+				</actor>
+				<actor>
+					<actorId>nm0000179</actorId>
+					<actorName>Jude Law</actorName>
+					<character>Dr. John Watson</character>
+					<urlCharacter>http://www.imdb.com/character/ch0026702</urlCharacter>
+					<urlPhoto>http://ia.media-imdb.com/images/M/MV5BMTMwOTg5NTQ3NV5BMl5BanBnXkFtZTcwNzM3MDAzNQ@@._V1_SX32_CR0,0,32,44_AL_.jpg</urlPhoto><urlProfile>http://www.imdb.com/name/nm0000179</urlProfile>
+				</actor>
+			</actors>
+
+			<appRating>0</appRating>
+			<appTotalVotes>0</appTotalVotes>
+			<appTotalWatched>0</appTotalWatched>
+			<appTotalToWatch>0</appTotalToWatch>
+			<userComments>
+			</userComments>
+		</movie>	
+
+		<movie>
+			<movieId>tt0133093</movieId>
+			<url>http://www.imdb.com/title/tt0133093</url>
+			<urlPoster>http://ia.media-imdb.com/images/M/MV5BMTkxNDYxOTA4M15BMl5BanBnXkFtZTgwNTk0NzQxMTE@._V1_SX214_AL_.jpg</urlPoster>
+			<title>The Matrix</title>
+			<year>1999</year>
+			<releaseDate>19990331</releaseDate>
+			<runtime>136 min</runtime>
+			<genres>
+				<genre>Action</genre>
+				<genre>Sci-Fi</genre>
+			</genres>
+			<simplePlot>
+				A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.
+			</simplePlot>
+			<plot>
+				Thomas A. Anderson is a man living two lives. By day he is an average computer programmer and by night a hacker known as Neo. Neo has always questioned his reality, but the truth is far beyond his imagination. Neo finds himself targeted by the police when he is contacted by Morpheus, a legendary computer hacker branded a terrorist by the government. Morpheus awakens Neo to the real world, a ravaged wasteland where most of humanity have been captured by a race of machines that live off of the humans' body heat and electrochemical energy and who imprison their minds within an artificial reality known as the Matrix. As a rebel against the machines, Neo must return to the Matrix and confront the agents: super-powerful computer programs devoted to snuffing out Neo and the entire human rebellion.
+			</plot>
+			<directors>
+				<director>
+					<name>Andy Wachowski</name>
+					<nameId>nm0905152</nameId>
+				</director>
+				<director>
+					<name>Lana Wachowski</name>
+					<nameId>nm0905154</nameId>
+				</director>
+			</directors>
+			<imdbRating>8.7</imdbRating>
+			<imdbTotalVotes>1027393</imdbTotalVotes>
+			<actors>
+				<actor>
+					<actorId>nm0000206</actorId>
+					<actorName>Keanu Reeves</actorName>
+					<character>Neo</character>
+					<urlCharacter>http://www.imdb.com/character/ch0000741</urlCharacter>
+					<urlPhoto>http://ia.media-imdb.com/images/M/MV5BNjUxNDcwMTg4Ml5BMl5BanBnXkFtZTcwMjU4NDYyOA@@._V1_SY44_CR1,0,32,44_AL_.jpg</urlPhoto>
+					<urlProfile>http://www.imdb.com/name/nm0000206</urlProfile>
+				</actor>
+				<actor>
+					<actorId>nm0000401</actorId>
+					<actorName>Laurence Fishburne</actorName>
+					<character>Morpheus</character>
+					<urlCharacter>http://www.imdb.com/character/ch0000746</urlCharacter>
+					<urlPhoto>http://ia.media-imdb.com/images/M/MV5BMTc0NjczNDc1MV5BMl5BanBnXkFtZTYwMDU0Mjg1._V1_SX32_CR0,0,32,44_AL_.jpg</urlPhoto>
+					<urlProfile>http://www.imdb.com/name/nm0000401</urlProfile>
+				</actor>
+			</actors>
+
+			<appRating>0</appRating>
+			<appTotalVotes>0</appTotalVotes>
+			<appTotalWatched>0</appTotalWatched>
+			<appTotalToWatch>0</appTotalToWatch>
+			<userComments>
+			</userComments>
+		</movie>
+	</movies>
+	<users>
+	   <user userName="User1" userId="123" password="@£§@£§">
+	      <toSeeList>
+	         <movieId>tt0988045</movieId>
+	         <movieId>tt1515091</movieId>
+	      </toSeeList>
+	      <seenList>
+	         <movie>
+	            <movieId>tt3168230</movieId>
+	            <personalClassification>10</personalClassification>
+	            <comment>Cool movie</comment>
+	         </movie>
+	      </seenList>
+	  </user>
+	    <user userName="User2" userId="132" password="daowdkaok">
+	        <toSeeList></toSeeList>
+	        <seenList></seenList>
+	    </user>
+	</users>
+</root>
