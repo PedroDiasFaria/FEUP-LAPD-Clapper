@@ -24,6 +24,32 @@ angular.module('starter.services', [])
     };
 })
 
+.factory('Lists', function() {
+  var toWatchMovies = [
+    {
+      name : "OI"
+    }
+  ];
+
+  var watchedMovies = [
+    {
+      name: "fds"
+    },
+    {
+      name: "crl"
+    }
+  ];
+
+  return{
+     getToWatchMovies: function() {
+      return toWatchMovies;
+    },
+     getWatchedMovies: function() {
+      return watchedMovies;
+    }
+  };
+})
+
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 
@@ -81,14 +107,23 @@ angular.module('starter.services', [])
             {id: 'Miguel', descrp: 'Fail', content: 'Um desastre', rating: 2.2, createdOn: 1397490980837}
         ];
 
-        var movie = {
-            name : "none",
+        var movies = [
+        {
+            name : "OI",
             rating : 0,
             poster : "../img/clapperlogo.png",
             year: "",
             plot: "",
             show: false
-        };
+        },
+        {
+            name : "OLA",
+            rating : 0,
+            poster : "../img/clapperlogo.png",
+            year: "",
+            plot: "",
+            show: false
+        }];
 
         return{
           getMovie: function(){
