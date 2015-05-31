@@ -19,6 +19,8 @@ var movieIdQuery = 'getMovieById.xq?id=';
 var movieTitleQuery = 'getMovieByTitle.xq?title=';
 var movieGenreQuery = 'getMovieByGenre.xq?genre=';
 
+var addMovieQuery = 'addMovie.xq';
+
 
 //TODO resposta das query de varios filmes, que responda cada <movie></movie> separado, e nao num array
 
@@ -140,6 +142,35 @@ module.exports.list = function(req, res) {
                     if(!result.status) {
                         console.log(result);
                         res.send(result);
+                    }else
+                        if(req.query.title){            //if movie doesn't exist on db, goes to myapifilms and saves it in the db for future use
+                        var myapiurl = 'http://www.myapifilms.com/imdb?' + 'title' + '=' + req.query.title + '&format=XML&aka=0&business=0&seasons=0&seasonYear=0&technical=0&filter=N&exactFilter=0&limit=1&forceYear=0&lang=en-us&actors=S&biography=0&trailer=0&uniqueName=0&filmography=0&bornDied=0&starSign=0&actorActress=0&actorTrivia=0&movieTrivia=0&awards=0&moviePhotos=N&movieVideos=N&similarMovies=0';
+
+                        request.get({url:myapiurl}, function(e, r, b){
+                            if(r.statusCode == 200 && b != ""){
+                                //console.log(b);
+                                //res.send(b);
+                                queryUrl = dbUrl + addMovieQuery;
+                                console.log(queryUrl);
+                                request.post({url:queryUrl, body: b}, function (er, re, bo) {
+                                    xml2js.parseString(bo, {explicitArray: false}, function (xmlerr, xmlres) {
+                                        if (xmlerr) {
+                                            console.log(xmlerr);
+                                        } else {
+                                            if(!xmlres.status) {
+                                                console.log(xmlres);
+                                                res.send(xmlres);
+                                            }
+                                        else{
+                                                res.send(xmlres);
+                                            }}});
+
+                                }).auth(existUsername, existPassword, true);
+
+                            }
+                        })
+
+
                     }else{
 
                         console.log(result);
@@ -162,6 +193,8 @@ module.exports.list = function(req, res) {
 
         }
     }).auth(existUsername, existPassword, true);
+
+    console.log("list movie end\n");
 };
 
 //Get movie by id

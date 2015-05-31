@@ -221,7 +221,7 @@ module.exports.updateSeen = function (req, res) {
 
 };
 
-//receives userId
+//receives userId - faltar receber movie inteiro em vez de so id
 module.exports.getUnseen = function(req, res){
 
     console.log('ReqNr: ' + (++countReq));
@@ -266,6 +266,7 @@ module.exports.getUnseen = function(req, res){
 
 };
 
+//receives userId - faltar receber movie inteiro em vez de so id
 module.exports.getSeen = function (req, res) {
 
     console.log('ReqNr: ' + (++countReq));

@@ -15,7 +15,4 @@ return
         <status>Already exists</status>
     else
         (update insert $movie into $movies,
-         <status> Movie Added </status>)   
-            
-
- 
+         <result>{$movie}</result>)
