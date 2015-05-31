@@ -13,12 +13,12 @@ var dbUrl = 'http://localhost:8080/exist/rest/db/existdb/';
 var countReq = 0;
 var existUsername = 'admin';
 var existPassword = '';
+
 var movieIdQuery = 'getMovieById.xq?id=';
 //mudar parametro name para title no frontend!
 var movieTitleQuery = 'getMovieByTitle.xq?title=';
-var movieGenreQuery = '';
-var movieDirectorQuery = '';
-var movieActorQuery = '';
+var movieGenreQuery = 'getMovieByGenre.xq?genre=';
+
 
 //TODO resposta das query de varios filmes, que responda cada <movie></movie> separado, e nao num array
 
@@ -119,19 +119,12 @@ module.exports.list = function(req, res) {
     console.log('actor='+ req.query.actor);
 
     var queryUrl = '';
+
     if(req.query.genre){
-        //queryUrl += 'getMovieById.xq?id=' + req.query.id;
-        //query de genero
         queryUrl = dbUrl + movieGenreQuery + req.query.genre;
     }else
     if(req.query.title){
         queryUrl = dbUrl + movieTitleQuery + req.query.title;
-    }else
-    if(req.query.actor){
-        queryUrl = dbUrl + movieActorQuery + req.query.actor;
-    }else
-    if(req.query.director){
-        queryUrl = dbUrl + movieDirectorQuery + req.query.actor;
     }else{
         res.send({error: "error on /api/movie/list: Wrong parameter. Search by title/genre/actor/director only!"});
     }
@@ -151,6 +144,7 @@ module.exports.list = function(req, res) {
 
                         console.log(result);
                         res.send(result);
+
                         /*
                         caso nao encontre na bd. fazer funçao para procurar na myapifilms
                         //isto só para procura com titulo!

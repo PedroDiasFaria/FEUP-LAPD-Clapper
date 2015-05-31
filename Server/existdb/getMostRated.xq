@@ -18,7 +18,7 @@ let $ordered_movies :=
   </movies>
              
   return
-      <most_rated> 
+      <result> 
         {
             for $movie_rating in $ordered_movies//movie
             let $movie := $movies//movie[movieId = $movie_rating/id]
@@ -30,4 +30,4 @@ let $ordered_movies :=
                     {$movie/year}
                     {$movie_rating/appTotalVotes}
                 </movie> 
-    }</most_rated>
+    }</result>

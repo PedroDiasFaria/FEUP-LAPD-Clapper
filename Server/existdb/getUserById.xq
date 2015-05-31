@@ -4,7 +4,7 @@ declare namespace request="http://exist-db.org/xquery/request";
 declare option exist:serialize "method=xml media-type=text/xml indent=yes";
 
 let $users := doc('clapperDB.xml')//users
-let $id := request:get-parameter('id', '12881')
+let $id := request:get-parameter('id', '')
 
 let $user := $users//user[@userId = $id]
             

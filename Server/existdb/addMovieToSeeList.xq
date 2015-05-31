@@ -4,8 +4,8 @@ declare option exist:serialize "method=xml media-type=text/xml indent=yes";
 let $users := doc("clapperDB.xml")//users
 let $movies := doc("clapperDB.xml")//movies
 
-let $userId := "123"
-let $movieId :=  "tt3168230"
+let $userId :=  request:get-parameter('id', '')
+let $movieId :=  request:get-parameter('movieId', '')
 
 return
     if($users//user[@userId = $userId])
@@ -14,15 +14,15 @@ return
        then
             if($users//user[@userId = $userId]/toSeeList/movieId = $movieId)
             then
-               <status> Movie Already Exists In List </status> 
+               <status code="409"> Movie Already Exists In List </status> 
             else
                 if($users//user[@userId = $userId]/seenList/movie/movieId/text() = $movieId)
                 then
-                    <status> Movie already seen </status>
+                    <status code="409"> Movie already seen </status>
                 else
                 (update insert <movieId>{$movieId}</movieId> into  $users//user[@userId = $userId]/toSeeList,
-                <status> Movie Added To The List </status>)
+                <status code="200"> Movie Added To The List </status>)
         else
-         <status> Movie Not Found In Data Base</status>
+         <status code="404"> Movie Not Found In Data Base</status>
     else
-        <status> User Not Found </status>
+        <status code="404"> User Not Found </status>

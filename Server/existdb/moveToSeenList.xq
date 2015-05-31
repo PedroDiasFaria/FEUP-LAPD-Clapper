@@ -3,25 +3,39 @@ xquery version "3.0";
 declare option exist:serialize "method=xml media-type=text/xml indent=yes";
 
 let $users := doc("clapperDB.xml")//users
-let $movies := doc("clapperDB.xml")//movies
 
-let $userId := "123"
-let $movieId :=  "tt0988045"
+let $userId := request:get-parameter('id', '')
+let $movieId := request:get-parameter('movieId', '') 
+let $classification := request:get-parameter('classification', '') 
+let $comment := request:get-parameter('comment', '') 
 
 return 
     if($users//user[@userId = $userId])
     then
         if($users//user[@userId = $userId]/toSeeList/movieId = $movieId)
         then
-            (update delete $users//user[@userId = $userId]/toSeeList/movieId[text() = $movieId],
-            update insert 
-            <movie>
-                <movieId>{$movieId}</movieId>
-                <personalClassification></personalClassification>
-            </movie> 
-            into  $users//user[@userId = $userId]/seenList,
-            <status> Movie Moved </status>)
+            if($comment = '')
+            then
+                (update delete $users//user[@userId = $userId]/toSeeList/movieId[text() = $movieId],
+                update insert 
+                <movie>
+                    <movieId>{$movieId}</movieId>
+                    <personalClassification>{$classification}</personalClassification>
+                </movie> 
+                into  $users//user[@userId = $userId]/seenList,
+                <status code="200"> Movie Moved </status>)
+            else
+                (update delete $users//user[@userId = $userId]/toSeeList/movieId[text() = $movieId],
+                update insert 
+                <movie>
+                    <movieId>{$movieId}</movieId>
+                    <personalClassification>{$classification}</personalClassification>
+                    <comment>{$comment}</comment>
+                </movie> 
+                into  $users//user[@userId = $userId]/seenList,
+                <status code="200"> Movie Moved </status>)
+                
         else
-            <status> Movie Not Found In List </status> 
+            <status code="404"> Movie Not Found In List </status> 
     else
-        <status> User Not Found </status>
+        <status code="404"> User Not Found </status>
