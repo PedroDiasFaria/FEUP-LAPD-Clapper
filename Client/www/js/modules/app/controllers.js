@@ -1,18 +1,27 @@
 angular.module('starter.controllers', [])
 
+//movies
+    /*Controller para modificar a BD de filmes:
+     get user comment
+     get user rating
+     search movies
+     retrieve data
+
+     */
+
+//users
+    /*Controller para modificar a BD dos users:
+     regist/login
+     add movie to list
+     post rating
+     post comment
+     edit comment
+     edit rating
+     */
 
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  }
-})
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
-
+//pode-se retirar o lists, é estático
+    //adicionar um user sempre fixo
 .controller('ListsCtrl', function($scope, $http, $ionicModal, Lists) {
     $scope.toWatchMovies = Lists.getToWatchMovies();
     $scope.watchedMovies = Lists.getWatchedMovies();
@@ -60,7 +69,7 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-    //TODO passar para modulo movies
+    //editar para receber um array de movies[]
 .controller('SearchMoviesCtrl', function($scope, $http, Movie) {
 
     $scope.searchOpts = [
