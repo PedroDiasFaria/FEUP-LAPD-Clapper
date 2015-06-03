@@ -9,5 +9,5 @@ let $title := request:get-parameter('title', '')
 let $movies := $moviesDB//movies/movie[matches(title,$title,'i')]
             
 return	if (empty($movies) or $title = '')
-then <status>Nenhum resultado encontrado!</status>
+then <status code="404">Nenhum resultado encontrado!</status>
 else <result>{$movies}</result>

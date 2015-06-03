@@ -24,6 +24,20 @@ angular.module('starter.services', [])
     };
 })
 
+.factory('User', function () {
+        var name = "User1";
+        var userId = "123";
+
+        return{
+            getUserName: function(){
+                return name;
+            },
+            getUserId: function(){
+                return userId;
+            }
+        };
+})
+
 .factory('Lists', function() {
   var toWatchMovies = [
     {

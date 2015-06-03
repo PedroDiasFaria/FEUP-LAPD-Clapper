@@ -22,10 +22,12 @@ angular.module('starter.controllers', [])
 
 //pode-se retirar o lists, é estático
     //adicionar um user sempre fixo
-.controller('ListsCtrl', function($scope, $http, $ionicModal, Lists) {
+.controller('ListsCtrl', function($scope, $http, $ionicModal, Lists, User) {
     $scope.toWatchMovies = Lists.getToWatchMovies();
     $scope.watchedMovies = Lists.getWatchedMovies();
+    //modificar os gets para chamadas á DB
 
+    $scope.userId = User.getUserId();
 
     $scope.groups = [];
     $scope.groups[0] = {
@@ -53,11 +55,23 @@ angular.module('starter.controllers', [])
   }).then(function(modal) {
     $scope.modal = modal;
   });
-  
+
   $scope.createContact = function(u) {        
     $scope.contacts.push({ name: u.firstName + ' ' + u.lastName });
     $scope.modal.hide();
   };
+
+        $scope.moveToSeen = function(userId, movieId, rating, comment){
+
+        }
+
+        $scope.removeFromUnseen = function(userId, movieId){
+
+        }
+
+        $scope.updateRating_Comment = function(userId, movieId){
+            
+        }
 })
 
 .controller('AccountCtrl', function($scope, $stateParams, Chats) {
@@ -69,21 +83,21 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-    //editar para receber um array de movies[]
-.controller('SearchMoviesCtrl', function($scope, $http, Movie) {
+    //botão para adicionar filme a lista de unseen
+.controller('SearchMoviesCtrl', function($scope, $http, Movie, User) {
+
 
     $scope.searchOpts = [
-        {opt: 'name', optName: 'Movie Title'},
-        {opt: 'id', optName: 'Movie ID'}
+        {opt: 'title', optName: 'Movie Title'},
+        {opt: 'actor', optName: 'Actor'},
+        {opt: 'genre', optName: 'Genre'}
     ];
 
     $scope.selectedOpt = $scope.searchOpts[0];
 
     $scope.movies = [];
-    $scope.comments = "";
     $scope.comments = Movie.getComments();
-
-    //$scope.movieXML = Movie.getMovie();
+    $scope.userId = User.getUserId();
 
 
     $scope.searchMovieBy = function(movie, selectedOpt){
@@ -94,25 +108,14 @@ angular.module('starter.controllers', [])
     }
 
     $scope.getMovie = function(text, option){
-        /*var url = 'http://www.myapifilms.com/imdb?' + option + '=' + text + '&format=XML';
-
-        console.log('Request to: ' + url);*/
-
         var url = 'http://localhost:3000/api/movie?' + option + '=' + text;
 
         $http.get(url).
             success(function(data, status, headers, config) {
-                // this callback will be called asynchronously
-                // when the response is available
-                //console.log(data);
-                /*if(window.DOMParser){
-                parser = new DOMParser()
-                // xmlDoc=parser.parseFromString(data,"text/xml");
-                }*/
                 console.log(data);
 
                 if(!data.status) {
-                    if (data.result.movie.length > 1) {
+                    if (data.result.movie.length >= 1) {
                         for (var i = 0; i < data.result.movie.length; i++) {
 
                             movie = {};
@@ -129,9 +132,6 @@ angular.module('starter.controllers', [])
                             console.log(movie);
 
                             $scope.movies.push(movie);
-
-
-                            //console.log($scope.comments);
                         }
                     } else {
                         movie = {};
@@ -152,14 +152,11 @@ angular.module('starter.controllers', [])
                 }else{
                     movie = {};
 
-
-                    movie.name = data.status;
+                    movie.name = data.status._;
                     $scope.movies.push(movie);
                 }
             }).
              error(function(data, status, headers, config) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
                 console.log('err');
             });
 
@@ -167,6 +164,29 @@ angular.module('starter.controllers', [])
 
     }
 
+        //fazer um modal para cada caso
+    $scope.addMovieUnseen = function(userId, movieId){
+        var url = 'http://localhost:3000/api/user/addUnseen/' + userId + '?movieId=' + movieId ;
+
+        $http.post(url).
+            success(function(data){
+                console.log(data);
+
+                if(data.status.$.code == "409"){//Movie already in one of the lists
+                    //meter qqr coisa a dizer o status
+                }else
+                if(data.status.$.code == "404"){//Movie not found
+
+                }else
+                if(data.status.$code == "200"){//Movie added to list
+
+                }
+            }).
+            error(function(data){
+                console.log('err');
+            })
+
+    }
 });
 
 /*

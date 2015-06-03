@@ -18,6 +18,7 @@ var movieIdQuery = 'getMovieById.xq?id=';
 //mudar parametro name para title no frontend!
 var movieTitleQuery = 'getMovieByTitle.xq?title=';
 var movieGenreQuery = 'getMovieByGenre.xq?genre=';
+var movieActorQuery = 'getMovieByActor.xq?actor='
 
 var addMovieQuery = 'addMovie.xq';
 
@@ -127,6 +128,9 @@ module.exports.list = function(req, res) {
     }else
     if(req.query.title){
         queryUrl = dbUrl + movieTitleQuery + req.query.title;
+    }else
+    if(req.query.actor){
+        queryUrl = dbUrl + movieActorQuery + req.query.actor;
     }else{
         res.send({error: "error on /api/movie/list: Wrong parameter. Search by title/genre/actor/director only!"});
     }
