@@ -25,7 +25,7 @@ angular.module('starter.services', [])
 })
 
 .factory('User', function () {
-        var name = "User1";
+        var name = "Zeca";
         var userId = "123";
 
         return{

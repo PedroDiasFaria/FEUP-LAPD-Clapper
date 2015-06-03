@@ -10,17 +10,18 @@ let $id := request:get-parameter('id', '')
 
 let $user := $users[user/@userId = $id]
         
-return 
+return
     if (empty($user))
-    then <status>User not found!</status>
-else 
-    for $mId in $users/user[@userId = $id]/toSeeList/movieId/text()
-    return
-        <movies>
+    then 
+        <status code="404">user not found!</status>
+    else
+<result>
         {
-            $movies//movie[movieId = $mId]
+            for $mId in $users/user[@userId = $id]/toSeeList/movieId
+            for $x in  $movies//movie[movieId = $mId]
+            return $x
         }
-        </movies>
+</result>
     
-    
+
     

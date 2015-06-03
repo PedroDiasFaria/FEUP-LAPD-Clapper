@@ -73,7 +73,7 @@
             </div>
             <div class="item item-text-wrap" ng-show="!showMore">
                 <h3><b>Comments:</b></h3>
-                <div ng-repeat="comment in movie.userComments">
+                <div ng-repeat="comment in movie.userComments track by $index">
                     <h2>{{comment.$.userName}}</h2>
                     <p><b>Comment: </b>{{comment._}}</p>
                 </div>

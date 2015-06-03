@@ -24,10 +24,12 @@ angular.module('starter.controllers', [])
     //adicionar um user sempre fixo
 .controller('ListsCtrl', function($scope, $http, $ionicModal, Lists, User) {
     $scope.toWatchMovies = [];
-    $scope.watchedMovies = []; 
-    //modificar os gets para chamadas á DB
+    $scope.watchedMovies = [];
 
     $scope.userId = User.getUserId();
+
+    $scope.replyMessage = "";
+    $scope.replyCode = 0;
 
     $scope.groups = [];
     $scope.groups[0] = {
@@ -73,7 +75,7 @@ angular.module('starter.controllers', [])
             success(function(data, status, headers, config) {
                 console.log(data);
 
-                if(!data.status) {
+                if(!data.status  && data.result) {
                     if (data.result.movie.length >= 1) {
                         for (var i = 0; i < data.result.movie.length; i++) {
 
@@ -90,10 +92,10 @@ angular.module('starter.controllers', [])
                             movieToWatch.plot = data.result.movie[i].plot;
                             movieToWatch.year = data.result.movie[i].year;
                             movieToWatch.genres = data.result.movie[i].genres;
-                            movieToWatch.actors = data.result.movie[i].actors;       
-                            
+                            movieToWatch.actors = data.result.movie[i].actors;
 
-                            movieToWatch.userComments = data.result.movie[i].userComments;                          
+
+                            movieToWatch.userComments = data.result.movie[i].userComments;
 
                             movieToWatch.show = true;
                             console.log('Movie nr:' + i + 'is;');
@@ -115,10 +117,10 @@ angular.module('starter.controllers', [])
                         movieToWatch.plot = data.result.movie.plot;
                         movieToWatch.year = data.result.movie.year;
                         movieToWatch.genres = data.result.movie.genres;
-                        movieToWatch.actors = data.result.movie.actors;       
-                            
+                        movieToWatch.actors = data.result.movie.actors;
 
-                        movieToWatch.userComments = data.result.movies.userComments;      
+
+                        movieToWatch.userComments = data.result.movie.userComments;
 
                         movieToWatch.show = true;
                         console.log('Movie is;');
@@ -129,7 +131,7 @@ angular.module('starter.controllers', [])
                 }else{
                     movieToWatch = {};
 
-                    movieToWatch.name = data.status._;
+                    movieToWatch.name = data.result._;
                     $scope.toWatchMovies.push(movieToWatch);
                 }
             }).
@@ -144,7 +146,7 @@ angular.module('starter.controllers', [])
             success(function(data, status, headers, config) {
                 console.log(data);
 
-                if(!data.status) {
+                if(!data.status  && data.result) {
                     if (data.result.movie.length >= 1) {
                         for (var i = 0; i < data.result.movie.length; i++) {
 
@@ -161,10 +163,10 @@ angular.module('starter.controllers', [])
                             movie.plot = data.result.movie[i].plot;
                             movie.year = data.result.movie[i].year;
                             movie.genres = data.result.movie[i].genres;
-                            movie.actors = data.result.movie[i].actors;       
-                            
+                            movie.actors = data.result.movie[i].actors;
 
-                            movie.userComments = data.result.movie[i].userComments;                          
+
+                            movie.userComments = data.result.movie[i].userComments;
 
                             movie.show = true;
                             console.log('Movie nr:' + i + 'is;');
@@ -186,10 +188,10 @@ angular.module('starter.controllers', [])
                         movie.plot = data.result.movie.plot;
                         movie.year = data.result.movie.year;
                         movie.genres = data.result.movie.genres;
-                        movie.actors = data.result.movie.actors;       
-                            
+                        movie.actors = data.result.movie.actors;
 
-                        movie.userComments = data.result.movies.userComments;      
+
+                        movie.userComments = data.result.movie.userComments;
 
                         movie.show = true;
                         console.log('Movie is;');
@@ -200,7 +202,7 @@ angular.module('starter.controllers', [])
                 }else{
                     movie = {};
 
-                    movie.name = data.status._;
+                    movie.name = data.result._;
                     $scope.watchedMovies.push(movie);
                 }
             }).
@@ -209,25 +211,153 @@ angular.module('starter.controllers', [])
         }
 
         $scope.moveToSeen = function(userId, movieId, rating, comment){
+            var url = 'http://localhost:3000/api/user/addSeen/' + $scope.userId + '?movieId=' + movieId + '?classification=' + rating + '?comment=' + comment;
 
+            $scope.replyMessage = "";
+            $scope.replyCode = 0;
+
+            $http.get(url).
+                success(function(data, status, headers, config) {
+                    console.log(data);
+                    if(data.status.$.code == "409"){//Movie already in one of the lists
+                        $scope.replyCode = parseInt(data.status.$.code);
+                        $scope.replyMessage = "Movie already in one of the lists";
+                    }else
+                    if(data.status.$.code == "404"){//Movie not found
+
+                    }else
+                    if(data.status.$.code == "200"){//Movie added to list
+                        $scope.replyCode = parseInt(data.status.$.code);
+                        $scope.replyMessage = "Movie seen";
+                    }
+
+                }).
+                error(function(data, status, headers, config){
+                    console.log('err');
+                });
+
+            $scope.loadLists()
         }
 
         $scope.removeFromUnseen = function(userId, movieId){
+            var url = 'http://localhost:3000/api/user/removeUnseen/' + $scope.userId + '?movieId=';
 
+            $scope.replyMessage = "";
+            $scope.replyCode = 0;
+
+            $http.delete(url).
+                success(function(data, status, headers, config) {
+                    console.log(data);
+                    if(data.status.$.code == "409"){//Movie already in one of the lists
+                        $scope.replyCode = parseInt(data.status.$.code);
+                        $scope.replyMessage = "Movie already in one of the lists";
+                    }else
+                    if(data.status.$.code == "404"){//Movie not found
+
+                    }else
+                    if(data.status.$.code == "200"){
+                        $scope.replyCode = parseInt(data.status.$.code);
+                        $scope.replyMessage = "Movie removed from list";
+                    }
+
+                }).
+                error(function(data, status, headers, config){
+                    console.log('err');
+                });
+
+            $scope.loadLists()
         }
 
         $scope.updateRating_Comment = function(userId, movieId){
-            
+            var url = 'http://localhost:3000/api/user/removeUnseen/' + $scope.userId + '?movieId=';
+
+            $scope.replyMessage = "";
+            $scope.replyCode = 0;
+
+            $http.put(url).
+                success(function(data, status, headers, config) {
+                    console.log(data);
+                    if(data.status.$.code == "409"){
+                        $scope.replyCode = parseInt(data.status.$.code);
+                        $scope.replyMessage = "Error on update";
+                    }else
+                    if(data.status.$.code == "404"){//Movie not found
+                        $scope.replyCode = parseInt(data.status.$.code);
+                        $scope.replyMessage = "Movie not found";
+                    }else
+                    if(data.status.$.code == "200"){
+                        $scope.replyCode = parseInt(data.status.$.code);
+                        $scope.replyMessage = "Personal opinion updated";
+                    }
+
+                }).
+                error(function(data, status, headers, config){
+                    console.log('err');
+                });
         }
 })
 
-.controller('AccountCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+.controller('AccountCtrl', function($scope, $http, User) {
+        $scope.toWatchMovies = 0;
+        $scope.watchedMovies = 0;
+        $scope.userName = User.getUserName();
+        $scope.userId = User.getUserId();
+
+        $scope.replyMessage = "";
+        $scope.replyCode = 0;
+
+        $scope.loadLists = function(){
+            $scope.getToWatchMovies();
+            $scope.getWatchedMovies();
+        }
+
+
+        $scope.getToWatchMovies = function(){
+            var url = 'http://localhost:3000/api/user/getUnseen/' + $scope.userId;
+
+            $http.get(url).
+                success(function(data, status, headers, config) {
+                    console.log(data);
+
+                    if(!data.status && data.result) {
+                        if (data.result.movie.length >= 1) {
+                            for (var i = 0; i < data.result.movie.length; i++) {
+                                $scope.toWatchMovies++;
+                            }
+                        } else {
+                            $scope.toWatchMovies++;
+                        }
+                    }
+                }).
+                error(function(data, status, headers, config) {
+                });
+        }
+
+        $scope.getWatchedMovies = function(){
+            var url = 'http://localhost:3000/api/user/getSeen/' + $scope.userId;
+
+            $http.get(url).
+                success(function(data, status, headers, config) {
+                    console.log(data);
+
+                    if(!data.status  && data.result) {
+                        if (data.result.movie.length >= 1) {
+                            for (var i = 0; i < data.result.movie.length; i++) {
+                                $scope.watchedMovies++;
+                            }
+                        } else {
+                            $scope.watchedMovies++;
+                        }
+                    }
+                }).
+                error(function(data, status, headers, config) {
+                });
+        }
 })
 
 
 .controller('HomeCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+
 })
 
     //botão para adicionar filme a lista de unseen
@@ -271,7 +401,7 @@ angular.module('starter.controllers', [])
             success(function(data, status, headers, config) {
                 console.log(data);
 
-                if(!data.status) {
+                if(!data.status  && data.result) {
                     if (data.result.movie.length >= 1) {
                         for (var i = 0; i < data.result.movie.length; i++) {
 
@@ -316,7 +446,7 @@ angular.module('starter.controllers', [])
                         movie.actors = data.result.movie.actors;       
                             
 
-                        movie.userComments = data.result.movies.userComments;      
+                        movie.userComments = data.result.movie.userComments;
 
                         movie.show = true;
                         console.log('Movie is;');

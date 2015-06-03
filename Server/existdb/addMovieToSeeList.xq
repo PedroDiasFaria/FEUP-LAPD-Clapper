@@ -14,16 +14,16 @@ return
        then
             if($users//user[@userId = $userId]/toSeeList/movieId = $movieId)
             then
-               <status> Movie Already Exists In List </status> 
+               <status code="409"> Movie Already Exists In List </status> 
             else
-                if($users//user[@userId = $userId]/seenList/movie/movieId/text() = $movieId)
+                if($users//user[@userId = $userId]/seenList/movieOpinion/movieId/text() = $movieId)
                 then
-                    <status> Movie already seen </status>
+                    <status code="409"> Movie already seen </status>
                 else
                 (update insert <movieId>{$movieId}</movieId> into  $users//user[@userId = $userId]/toSeeList,
                  update value $movies/movie[movieId = $movieId]/appTotalToWatch with ($movies/movie[movieId = $movieId]/appTotalToWatch + 1),
-                <status> Movie Added To The List </status>)
+                <status code="200"> Movie Added To The List </status>)
         else
-         <status> Movie Not Found In Data Base</status>
+         <status code="404"> Movie Not Found In Data Base</status>
     else
-        <status> User Not Found </status>
+        <status code="404"> User Not Found </status>
