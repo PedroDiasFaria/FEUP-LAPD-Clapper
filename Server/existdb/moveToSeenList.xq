@@ -18,20 +18,20 @@ return
             then
                 (update delete $users//user[@userId = $userId]/toSeeList/movieId[text() = $movieId],
                 update insert 
-                <movie>
+                <movieOpinion>
                     <movieId>{$movieId}</movieId>
                     <personalClassification>{$classification}</personalClassification>
-                </movie> 
+                </movieOpinion> 
                 into  $users//user[@userId = $userId]/seenList,
                 <status code="200"> Movie Moved </status>)
             else
                 (update delete $users//user[@userId = $userId]/toSeeList/movieId[text() = $movieId],
                 update insert 
-                <movie>
+                <movieOpinion>
                     <movieId>{$movieId}</movieId>
                     <personalClassification>{$classification}</personalClassification>
                     <comment>{$comment}</comment>
-                </movie> 
+                </movieOpinion> 
                 into  $users//user[@userId = $userId]/seenList,
                 <status code="200"> Movie Moved </status>)
                 

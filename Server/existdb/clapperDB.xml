@@ -177,11 +177,11 @@
 	         <movieId>tt0133093</movieId>
 	      </toSeeList>
 	      <seenList>
-	         <movie>
+	         <movieOpinion>
 	            <movieId>tt3168230</movieId>
 	            <personalClassification>10</personalClassification>
 	            <comment>Cool movie</comment>
-	         </movie>
+	         </movieOpinion>
 	      </seenList>
 	  </user>
 	    <user userName="User2" userId="132" password="daowdkaok">
