@@ -1,3 +1,6 @@
+<div class="bar bar-header bar-energized" ng-show="replyCode">
+  <h1 class="title">{{replyMessage}}</h1>
+</div>
 <ion-view view-title="Search">
     <ion-content>
 
@@ -22,74 +25,65 @@
         </div>
 
         <div class="list card" ng-repeat="movie in movies">
-
-            <div class="item item-avatar">
-                <img src="{{movie.poster}}">
-                <h2><b>{{movie.name}}</b></h2>
-                <p><b>IMDB rating: </b>{{movie.rating}}</p>
-                <p><b>Clapper rating: </b>{{movie.appRating}}</p>
+            <div class="row">
+                <div class="col col-80">
+                    <div class="item item-avatar">
+                        <img src="{{movie.poster}}">
+                        <h2><b>{{movie.title}}</b></h2>
+                        <p><b>IMDB rating: </b>{{movie.rating}}</p>
+                        <p><b>Clapper rating: </b>{{movie.appRating}}</p>
+                    </div>
+                </div>
+                <div class="col col-20">
+                    <br>
+                    <button class="button button-small button-positive" ng-click="addMovieUnseen(movie.movieId)">
+                        Watch later
+                    </button>
+                </div>
             </div>
 
             <div class="item item-image" >
                 <img src="{{movie.poster}}">
             </div>
 
-            <div class="item item-text-wrap">
+            <div class="item item-text-wrap" ng-show="showMore">
+                <h3><b>Plot:</b></h3>
+                <p>{{movie.simplePlot}}</p>
+            </div>
+            <div class="item item-text-wrap" ng-show="!showMore">
                 <h3><b>Plot:</b></h3>
                 <p>{{movie.plot}}</p>
-            </div>
 
-<!--
-            <div class="item item-divider">
-                <h3><b>Comments:</b></h3>
-                    <div class="item item-divider" ng-repeat="cmnt in comments">
-                            <blockquote>
-                                <b><em>"{{cmnt.descrp}}"</em> - ({{cmnt.rating}}/10):</b>
+                <h3><b>Year:</b></h3>
+                <p>{{movie.year}}</p>
 
-                                <br>
-                                <em>"{{cmnt.content}}"</em>
+                <h3><b>Genres:</b></h3>
+                <div ng-repeat="genre in movie.genres.genre">
+                    <p>{{genre}}</p>
+                </div>
 
-                                <p>
-                                <cite>by: <b>{{cmnt.id}}</b> on {{cmnt.createdOn | date: DD:MM:YY}}</cite>
-                                </p>
-                            </blockquote>
+                <h3><b>Actors:</b></h3>
+                <div ng-repeat="actor in movie.actors.actor">
+                    <div class="item item-avatar">
+                        <img src="{{actor.urlPhoto}}">
+                        <h2><b>{{actor.actorName}}</b></h2>
+                        <p><b>Character: </b>{{actor.character}}</p>
                     </div>
+                </div>
             </div>
--->
-            <!-- submit review template-->
-            <!--
-            <div class="item item-divider" ng-hide="true">
-                <!--  Review Form
-                <form name="reviewForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewCtrl.addReview(product)">
-
-                    <!--  Live Preview
-                    <blockquote >
-                        <strong>{{reviewCtrl.review.stars}} Stars</strong>
-                        {{reviewCtrl.review.body}}
-                        <cite class="clearfix">—{{reviewCtrl.review.author}}</cite>
-                    </blockquote>
-
-                    <!--  Review Form
-                    <h4>Submit a Review</h4>
-                    <fieldset class="form-group">
-                        <select ng-model="reviewCtrl.review.stars" class="form-control" ng-options="stars for stars in [5,4,3,2,1]" title="Stars">
-                            <option value>Rate the Product</option>
-                        </select>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <textarea ng-model="reviewCtrl.review.body" class="form-control" placeholder="Write a short review of the product..." title="Review"></textarea>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <input ng-model="reviewCtrl.review.author" type="email" class="form-control" placeholder="jimmyDean@example.org" title="Email" />
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <input type="submit" class="btn btn-primary pull-right" value="Submit Review" />
-                    </fieldset>
-                </form>
+            <div class="item item-text-wrap" ng-show="!showMore">
+                <h3><b>Comments:</b></h3>
+                <div ng-repeat="comment in movie.userComments">
+                    <h2>{{comment.$.userName}}</h2>
+                    <p><b>Comment: </b>{{comment._}}</p>
+                </div>
             </div>
-            -->
-
+            <button class="item item-button button-block button-light" ng-show="showMore" ng-click="showMoreFunction()">
+                Show more
+            </button>
+            <button class="item item-button button-block button-light" ng-show="!showMore" ng-click="showMoreFunction()">
+                Show less
+            </button>
         </div>
-
     </ion-content>
 </ion-view>

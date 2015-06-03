@@ -98,11 +98,15 @@ angular.module('starter.controllers', [])
     $scope.movies = [];
     $scope.comments = Movie.getComments();
     $scope.userId = User.getUserId();
+    $scope.replyMessage = "";
+    $scope.replyCode = 0;
+    $scope.showMore = 1;
 
 
     $scope.searchMovieBy = function(movie, selectedOpt){
         console.log('Searching ' + movie.searchText + ' and ' + selectedOpt.opt);
-
+        $scope.replyMessage = "";
+        $scope.replyCode = 0;
         $scope.getMovie(movie.searchText, selectedOpt.opt);
             //http://www.myapifilms.com/imdb?title=Matrix&format=XML
     }
@@ -121,13 +125,22 @@ angular.module('starter.controllers', [])
                             movie = {};
 
 
-                            movie.name = data.result.movie[i].title;
+                            movie.title = data.result.movie[i].title;
+                            movie.movieId = data.result.movie[i].movieId;
                             movie.poster = data.result.movie[i].urlPoster;
                             movie.rating = data.result.movie[i].imdbRating;
-                            movie.plot = data.result.movie[i].simplePlot;
+                            movie.simplePlot = data.result.movie[i].simplePlot;
                             movie.appRating = data.result.movie[i].appRating;
-                            movie.show = true;
 
+                            movie.plot = data.result.movie[i].plot;
+                            movie.year = data.result.movie[i].year;
+                            movie.genres = data.result.movie[i].genres;
+                            movie.actors = data.result.movie[i].actors;       
+                            
+
+                            movie.userComments = data.result.movie[i].userComments;                          
+
+                            movie.show = true;
                             console.log('Movie nr:' + i + 'is;');
                             console.log(movie);
 
@@ -137,13 +150,22 @@ angular.module('starter.controllers', [])
                         movie = {};
 
 
-                        movie.name = data.result.movie.title;
+                        movie.title = data.result.movie.title;
+                        movie.movieId = data.result.movie.movieId;
                         movie.poster = data.result.movie.urlPoster;
                         movie.rating = data.result.movie.imdbRating;
-                        movie.plot = data.result.movie.simplePlot;
+                        movie.simplePlot = data.result.movie.simplePlot;
                         movie.appRating = data.result.movie.appRating;
-                        movie.show = true;
 
+                        movie.plot = data.result.movie.plot;
+                        movie.year = data.result.movie.year;
+                        movie.genres = data.result.movie.genres;
+                        movie.actors = data.result.movie.actors;       
+                            
+
+                        movie.userComments = data.result.movies.userComments;      
+
+                        movie.show = true;
                         console.log('Movie is;');
                         console.log(movie);
 
@@ -165,8 +187,11 @@ angular.module('starter.controllers', [])
     }
 
         //fazer um modal para cada caso
-    $scope.addMovieUnseen = function(userId, movieId){
-        var url = 'http://localhost:3000/api/user/addUnseen/' + userId + '?movieId=' + movieId ;
+    $scope.addMovieUnseen = function(movieId){
+        var url = 'http://localhost:3000/api/user/addUnseen/' + $scope.userId + '?movieId=' + movieId ;
+
+        $scope.replyMessage = "";
+        $scope.replyCode = 0;
 
         $http.post(url).
             success(function(data){
@@ -174,17 +199,31 @@ angular.module('starter.controllers', [])
 
                 if(data.status.$.code == "409"){//Movie already in one of the lists
                     //meter qqr coisa a dizer o status
+                    $scope.replyCode = parseInt(data.status.$.code);
+                    $scope.replyMessage = "Movie already in one of the lists";
                 }else
                 if(data.status.$.code == "404"){//Movie not found
 
                 }else
-                if(data.status.$code == "200"){//Movie added to list
-
+                if(data.status.$.code == "200"){//Movie added to list
+                    $scope.replyCode = parseInt(data.status.$.code);
+                    $scope.replyMessage = "Movie added to list";
                 }
             }).
             error(function(data){
                 console.log('err');
             })
+
+    }
+
+    $scope.showMoreFunction = function(){
+
+        if($scope.showMore == 1){
+            $scope.showMore = 0;
+        }
+        else{
+            $scope.showMore = 1;
+        }
 
     }
 });
