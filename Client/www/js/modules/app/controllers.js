@@ -22,7 +22,7 @@ angular.module('starter.controllers', [])
 
 //pode-se retirar o lists, é estático
     //adicionar um user sempre fixo
-.controller('ListsCtrl', function($scope, $http, $ionicModal, Lists, User) {
+.controller('ListsCtrl', function($scope, $http, $ionicModal, $ionicPopup, Lists, User) {
     $scope.toWatchMovies = [];
     $scope.watchedMovies = [];
 
@@ -34,20 +34,98 @@ angular.module('starter.controllers', [])
     $scope.groups = [];
     $scope.groups[0] = {
         name: "To Watch",
-        items: $scope.toWatchMovies
+        items: $scope.toWatchMovies,
+        type: 0
     }
     $scope.groups[1] = {
         name: "Watched",
-        items: $scope.watchedMovies
+        items: $scope.watchedMovies,
+        type: 1
     }
 
     $scope.toggleGroup = function(group) {
-    if ($scope.isGroupShown(group)) {
-      $scope.shownGroup = null;
-    } else {
-      $scope.shownGroup = group;
-    }
-  };
+        if ($scope.isGroupShown(group)) {
+          $scope.shownGroup = null;
+        } else {
+          $scope.shownGroup = group;
+        }
+    };
+
+    $scope.showPopup = function(typeOfPopup, movie) {
+        $scope.data = {}
+        $scope.arrayRating = [];
+
+        for(var i = 1; i <= 10; i++){
+            $scope.arrayRating.push(i);
+        }
+
+        console.log('Type of popup is: ' + typeOfPopup);
+
+        // An elaborate, custom popup
+        if(typeOfPopup == 0) {//Add movie to seen
+            $ionicPopup.show({
+                template: '<div>Add<b> ' + movie.title + ' </b>to movies watched.</div><br>' +
+                    '<div class="list"><label class="item item-input item-select"><div class="input-label"><b>Rating</b></div>' +
+                    '<select ng-model="data.rating" ng-options="o as o for o in  arrayRating" class="item-positive"></select>' +'</div>' +
+                    '<div class="item"><b>Comment</b><div class="item"><input type="text" class="text-left" ng-model="data.comment"></div></div>',
+                title: 'Seen this movie?',
+                subTitle: 'Please rate and comment',
+                scope: $scope,
+                buttons: [
+                    {text: 'Cancel'},
+                    {
+                        text: '<b>Save</b>',
+                        type: 'button-positive',
+                        onTap: function (e) {
+                            if (!$scope.data.rating) {
+                                alert("Plase rate!");
+                                e.preventDefault();
+                            } else {
+                                console.log('Rating: ' + $scope.data.rating + '\nComment: ' + $scope.data.comment);
+                                $scope.moveToSeen($scope.userId, movie.movieId, $scope.data.rating, $scope.data.comment);
+                            }
+                        }
+                    },
+                    {
+                        text: '<b>Remove</b>',
+                        type: 'button-assertive button-small',
+                        onTap: function(e){
+                            $scope.removeFromUnseen($scope.userId, movie.movieId);
+                        }
+                    }
+                ]
+            });
+        }else{//Edit your opinion
+            //Uses the user comment
+             $ionicPopup.show({
+                 template: '<div>Edit opinion of<b> ' + movie.title + ' </b>.</div><br>' +
+                 '<div class="list"><div class="item"><b>Previous rating:</b> '+ movie.movieOpinion.personalClassification  +'</div><label class="item item-input item-select"><div class="input-label"><b>Rating</b></div>' +
+                 '<select ng-model="data.rating" ng-options="o as o for o in  arrayRating" class="item-positive"></select>' +'</div>' +
+                 '<div class="item"><label><b>Comment</b></label><div class="item"><input type="text" placeholder="'+ movie.movieOpinion.comment + '" class="text-left" ng-model="data.comment"></div></div>', //movie.movieOpinion.comment
+                 title: 'Seen this movie?',
+                 subTitle: 'Please rate and comment',
+                scope: $scope,
+                buttons: [
+                    {text: 'Cancel'},
+                    {
+                        text: '<b>Save</b>',
+                        type: 'button-positive',
+                        onTap: function (e) {
+                            if (!$scope.data.rating) {
+                                alert("Plase rate!");
+                                e.preventDefault();
+                            } else {
+                                console.log('Rating: ' + $scope.data.rating + '\nComment: ' + $scope.data.comment);
+                                $scope.updateRating_Comment($scope.userId, movie.movieId, $scope.data.rating, $scope.data.comment);
+                            }
+                        }
+                    }
+                ]
+            });
+        }
+
+    };
+
   $scope.isGroupShown = function(group) {
     return $scope.shownGroup === group;
   };
@@ -58,10 +136,7 @@ angular.module('starter.controllers', [])
     $scope.modal = modal;
   });
 
-  $scope.createContact = function(u) {        
-    $scope.contacts.push({ name: u.firstName + ' ' + u.lastName });
-    $scope.modal.hide();
-  };
+
 
   $scope.loadLists = function(){
     $scope.getToWatchMovies();
@@ -168,7 +243,9 @@ angular.module('starter.controllers', [])
 
                             movie.userComments = data.result.movie[i].userComments;
 
+                            movie.movieOpinion = data.result.movieOpinion[i];
                             movie.show = true;
+
                             console.log('Movie nr:' + i + 'is;');
                             console.log(movie);
 
@@ -193,6 +270,7 @@ angular.module('starter.controllers', [])
 
                         movie.userComments = data.result.movie.userComments;
 
+                        movie.movieOpinion = data.result.movieOpinion;
                         movie.show = true;
                         console.log('Movie is;');
                         console.log(movie);
@@ -211,12 +289,12 @@ angular.module('starter.controllers', [])
         }
 
         $scope.moveToSeen = function(userId, movieId, rating, comment){
-            var url = 'http://localhost:3000/api/user/addSeen/' + $scope.userId + '?movieId=' + movieId + '?classification=' + rating + '?comment=' + comment;
+            var url = 'http://localhost:3000/api/user/addSeen/' + $scope.userId + '?movieId=' + movieId + '&classification=' + rating + '&comment=' + comment;
 
             $scope.replyMessage = "";
             $scope.replyCode = 0;
 
-            $http.get(url).
+            $http.post(url).
                 success(function(data, status, headers, config) {
                     console.log(data);
                     if(data.status.$.code == "409"){//Movie already in one of the lists
@@ -229,6 +307,7 @@ angular.module('starter.controllers', [])
                     if(data.status.$.code == "200"){//Movie added to list
                         $scope.replyCode = parseInt(data.status.$.code);
                         $scope.replyMessage = "Movie seen";
+                        location.reload(true);
                     }
 
                 }).
@@ -236,11 +315,10 @@ angular.module('starter.controllers', [])
                     console.log('err');
                 });
 
-            $scope.loadLists()
         }
 
         $scope.removeFromUnseen = function(userId, movieId){
-            var url = 'http://localhost:3000/api/user/removeUnseen/' + $scope.userId + '?movieId=';
+            var url = 'http://localhost:3000/api/user/removeUnseen/' + $scope.userId + '?movieId=' + movieId;
 
             $scope.replyMessage = "";
             $scope.replyCode = 0;
@@ -258,6 +336,7 @@ angular.module('starter.controllers', [])
                     if(data.status.$.code == "200"){
                         $scope.replyCode = parseInt(data.status.$.code);
                         $scope.replyMessage = "Movie removed from list";
+                        location.reload(true);
                     }
 
                 }).
@@ -265,11 +344,11 @@ angular.module('starter.controllers', [])
                     console.log('err');
                 });
 
-            $scope.loadLists()
         }
 
-        $scope.updateRating_Comment = function(userId, movieId){
-            var url = 'http://localhost:3000/api/user/removeUnseen/' + $scope.userId + '?movieId=';
+        //editar url
+        $scope.updateRating_Comment = function(userId, movieId, rating, comment){
+            var url = 'http://localhost:3000/api/user/updateSeen/' + $scope.userId + '?movieId=' + movieId + '&classification=' + rating + '&comment=' + comment;
 
             $scope.replyMessage = "";
             $scope.replyCode = 0;
@@ -288,6 +367,7 @@ angular.module('starter.controllers', [])
                     if(data.status.$.code == "200"){
                         $scope.replyCode = parseInt(data.status.$.code);
                         $scope.replyMessage = "Personal opinion updated";
+                        location.reload(true);
                     }
 
                 }).
@@ -360,7 +440,6 @@ angular.module('starter.controllers', [])
 
 })
 
-    //botão para adicionar filme a lista de unseen
 .controller('SearchMoviesCtrl', function($scope, $http, Movie, User) {
 
 
@@ -511,18 +590,3 @@ angular.module('starter.controllers', [])
 
     }
 });
-
-/*
-add review:
-
- app.controller("ReviewController", function(){
-
- this.review = {};
-
- this.addReview = function(product){
- this.review.createdOn  = Date.now();
- product.reviews.push(this.review);
- this.review = {};
- };
- });
- */

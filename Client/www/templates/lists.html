@@ -13,7 +13,7 @@
           			<ion-item class="item-accordion"
                     ng-repeat="item in group.items"
                     ng-show="isGroupShown(group)">
-            			<div  ng-click="modal.show()"><a>{{item.title}}</a></div>
+            			<div  ng-click="showPopup({{group.type}}, {{item}})"><a>{{item.title}}</a></div>
           			</ion-item>
         		</div>
       		</ion-list>

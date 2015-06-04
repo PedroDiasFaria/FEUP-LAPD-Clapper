@@ -47,12 +47,12 @@
 				</actor>
 			</actors>
 
-			<appRating>8</appRating>
-			<appTotalVotes>2</appTotalVotes>
-			<appTotalWatched>3</appTotalWatched>
-			<appTotalToWatch>5</appTotalToWatch>
+			<appRating>10</appRating>
+			<appTotalVotes>1</appTotalVotes>
+			<appTotalWatched>1</appTotalWatched>
+			<appTotalToWatch>0</appTotalToWatch>
 			<userComments>
-				<comment commentId="1" userName="User1">
+				<comment userId="123">
 					Cool movie
 				</comment>
 			</userComments>
@@ -105,11 +105,14 @@
 				</actor>
 			</actors>
 
-			<appRating>0</appRating>
-			<appTotalVotes>0</appTotalVotes>
-			<appTotalWatched>0</appTotalWatched>
-			<appTotalToWatch>0</appTotalToWatch>
+			<appRating>5</appRating>
+			<appTotalVotes>1</appTotalVotes>
+			<appTotalWatched>1</appTotalWatched>
+			<appTotalToWatch>1</appTotalToWatch>
 			<userComments>
+				<comment userId="132">
+					OK
+				</comment>
 			</userComments>
 		</movie>	
 
@@ -165,7 +168,7 @@
 			<appRating>0</appRating>
 			<appTotalVotes>0</appTotalVotes>
 			<appTotalWatched>0</appTotalWatched>
-			<appTotalToWatch>0</appTotalToWatch>
+			<appTotalToWatch>1</appTotalToWatch>
 			<userComments>
 			</userComments>
 		</movie>
@@ -186,7 +189,13 @@
 	  </user>
 	    <user userName="User2" userId="132" password="daowdkaok">
 	        <toSeeList></toSeeList>
-	        <seenList></seenList>
+	        <seenList>
+	        	<movieOpinion>
+	        		<movieId>tt0988045</movieId>
+	        		<personalClassification>5</personalClassification>
+	        		<comment>OK</comment>
+	        	</movieOpinion>
+	        </seenList>
 	    </user>
 	</users>
 </root>
